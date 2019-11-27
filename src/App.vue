@@ -1,32 +1,62 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <div class="container">
+
+
+        <Sidebar />
+
+
+
+        <Home />
+
+
     </div>
-    <router-view/>
+
+    
+    
+
+
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+<script>
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+import Home from '@/views/Home'
+import Sidebar from '@/views/Sidebar'
+
+export default {
+  name: 'home',
+
+  components: {
+    Sidebar, Home
   }
 }
+
+</script>
+
+<style lang="scss">
+
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+.sidebar {
+  background-color: #d8d6d6;
+  width: 20%;
+}
+.home {
+  background-color: #fbf5f5;
+  width: 80%;
+}
+
 </style>
