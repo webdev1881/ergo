@@ -16,3 +16,13 @@ export default {
 }
 
 </script>
+
+
+<style lang="scss" >
+
+.home {
+  display: flex;
+  justify-content: center;
+}
+
+</style>

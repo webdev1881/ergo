@@ -1,6 +1,7 @@
 <template>
-  <div class="sidebar">
-    <a href="#" @click.prevent="$emit('')">
+  <div ref="sidebar" :class="{active: isActive}" class="sidebar"  >
+    <img src="er.svg" alt="">
+    <a href="#" @click.prevent="toggleNav">
       <i class="lines material-icons black-text">dehaze</i>
     </a>
     <router-link
@@ -19,6 +20,8 @@
 </template>
 
 
+
+
 <script>
 export default {
   props: ["value"],
@@ -28,12 +31,32 @@ export default {
       { title: "История", icon: "cloud", url: "/history" },
       { title: "Новая запись", icon: "cloud", url: "/record" },
       { title: "Категории", icon: "cloud", url: "/categories" }
-    ]
-  })
+    ],
+    isActive: false
+  }),
+  methods: {
+    toggleNav() {
+      this.isActive = !this.isActive;
+      // this.$refs.sidebar.style.width = '45px';
+      // console.log( this.$refs );
+
+    }
+  }
 };
 </script>
 
+
+
 <style lang="scss" >
+img {
+  width: 133px;
+  display: block;
+  margin: 5px 0 5px 0;
+}
+.active {
+  width: 45px !important;
+  padding-right: 0 !important;
+}
 a {
   color: black;
   .lines {
@@ -43,8 +66,11 @@ a {
 }
 
 .sidebar {
+  width: 185px;
+  padding-right: 15px;
   border-right: 1px solid gray;
   box-shadow: 5px 5px 5px 5px #111;
+  transition: all .25s;
 }
 
 .item {
@@ -57,6 +83,10 @@ a {
   &:hover {
     background-color: #fff;
     cursor: pointer;
+  }
+  .title {
+    display: inline-block;
+    white-space: nowrap;
   }
 }
 

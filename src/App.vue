@@ -52,11 +52,10 @@ export default {
 }
 .sidebar {
   background-color: #d8d6d6;
-  width: 20%;
 }
 .home {
   background-color: #fbf5f5;
-  width: 80%;
+  width: 100%;
 }
 
 </style>
