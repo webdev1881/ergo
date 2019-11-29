@@ -1,35 +1,28 @@
 <template>
-<div ref="sidebar" :class="{toggle: isActive}" class="sidebar">
+  <div ref="sidebar" :class="{toggle: isActive}" class="sidebar">
+    <img src="er.svg" alt />
 
-  <img src="er.svg" alt="">
+    <a class="a-togg" href="#" @click.prevent="toggleNav">
+      <i class="lines material-icons black-text">dehaze</i>
+    </a>
 
-  <a class="a-togg" href="#" @click.prevent="toggleNav">
-    <i class="lines material-icons black-text">dehaze</i>
-  </a>
-
-  <ul class="ul-side">   
-    <router-link
-      v-for="link in links"
-      :key="link.url"
-      tag="li"
-      class="item"
-      active-class="active"
-      :to="link.url"
-      :exact="link.exact"
-    >
-    
-      <a class="title">
-        <i class="material-icons">{{link.icon}}</i>
-        {{link.title}}
-      </a>
-
-    </router-link>
-  </ul>
-
-
-</div>
-
-
+    <ul class="ul-side">
+      <router-link
+        v-for="link in links"
+        :key="link.url"
+        tag="li"
+        class="item"
+        active-class="active"
+        :to="link.url"
+        :exact="link.exact"
+      >
+        <a class="title">
+          <i class="material-icons">{{link.icon}}</i>
+          {{link.title}}
+        </a>
+      </router-link>
+    </ul>
+  </div>
 </template>
 
 
@@ -64,7 +57,7 @@ img {
   margin: 5px 0 5px 0;
 }
 .toggle {
-  width: 45px !important;
+  width: 47px !important;
   padding-right: 0 !important;
 }
 .a-togg {
@@ -76,10 +69,12 @@ img {
 }
 
 .sidebar {
+  z-index: 1;
   width: 225px;
-  border-right: 2px solid gray;
-  box-shadow: 3px 0px #111;
-  transition: all .25s;
+
+  box-shadow: 1px 0px 3px gray;
+  transition: all 0.25s;
+  overflow: hidden;
 }
 
 .ul-side {
@@ -90,7 +85,7 @@ img {
   list-style-type: none;
   transition: all 0.2s;
   &:hover {
-    background-color: #fff;
+    background-color: #e0e0e0;
     cursor: pointer;
   }
   .title {
@@ -107,5 +102,4 @@ img {
     }
   }
 }
-
 </style>

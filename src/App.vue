@@ -1,22 +1,19 @@
 <template>
   <div id="app">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
 
-    <div class="container">
+    <div class="layout">
 
-
-        <Sidebar />
-
-
-
-        <Home />
-
+      <Sidebar />
+      <div class="wrapper">
+        <router-view />
+      </div>
+      
 
     </div>
-
-    
-    
-
 
   </div>
 </template>
@@ -24,38 +21,38 @@
 
 
 <script>
-
-import Home from '@/views/Home'
-import Sidebar from '@/views/Sidebar'
+import Home from "@/views/Home";
+import Sidebar from "@/views/Sidebar";
 
 export default {
-  name: 'home',
+  name: "home",
 
   components: {
-    Sidebar, Home
+    Sidebar,
+    Home
   }
-}
-
+};
 </script>
 
 <style lang="scss">
-
+@import "~materialize-css/dist/css/materialize.min.css";
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
-.container {
+.wrapper {
+  width: 100%;
+  padding: 10px;
+}
+
+.layout {
   display: flex;
   height: 100vh;
 }
 .sidebar {
-  background-color: #d8d6d6;
 }
 .home {
-  background-color: #fbf5f5;
-  width: 100%;
 }
-
 </style>
