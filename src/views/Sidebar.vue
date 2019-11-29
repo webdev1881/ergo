@@ -1,22 +1,35 @@
 <template>
-  <div ref="sidebar" :class="{active: isActive}" class="sidebar"  >
-    <img src="er.svg" alt="">
-    <a href="#" @click.prevent="toggleNav">
-      <i class="lines material-icons black-text">dehaze</i>
-    </a>
+<div ref="sidebar" :class="{toggle: isActive}" class="sidebar">
+
+  <img src="er.svg" alt="">
+
+  <a class="a-togg" href="#" @click.prevent="toggleNav">
+    <i class="lines material-icons black-text">dehaze</i>
+  </a>
+
+  <ul class="ul-side">   
     <router-link
       v-for="link in links"
       :key="link.url"
-      tag="div"
+      tag="li"
       class="item"
       active-class="active"
       :to="link.url"
       :exact="link.exact"
     >
-      <i class="material-icons">{{link.icon}}</i>
-      <div class="title">{{link.title}}</div>
+    
+      <a class="title">
+        <i class="material-icons">{{link.icon}}</i>
+        {{link.title}}
+      </a>
+
     </router-link>
-  </div>
+  </ul>
+
+
+</div>
+
+
 </template>
 
 
@@ -37,9 +50,6 @@ export default {
   methods: {
     toggleNav() {
       this.isActive = !this.isActive;
-      // this.$refs.sidebar.style.width = '45px';
-      // console.log( this.$refs );
-
     }
   }
 };
@@ -53,11 +63,11 @@ img {
   display: block;
   margin: 5px 0 5px 0;
 }
-.active {
+.toggle {
   width: 45px !important;
   padding-right: 0 !important;
 }
-a {
+.a-togg {
   color: black;
   .lines {
     font-size: 30px;
@@ -66,38 +76,36 @@ a {
 }
 
 .sidebar {
-  width: 185px;
-  padding-right: 15px;
-  border-right: 1px solid gray;
-  box-shadow: 5px 5px 5px 5px #111;
+  width: 225px;
+  border-right: 2px solid gray;
+  box-shadow: 3px 0px #111;
   transition: all .25s;
 }
 
+.ul-side {
+  padding: 0;
+}
+
 .item {
-  width: 100%;
-  display: flex;
-  // flex-direction: row-reverse;
-  align-items: center;
-  padding: 10px 0px 10px 0px;
+  list-style-type: none;
   transition: all 0.2s;
   &:hover {
     background-color: #fff;
     cursor: pointer;
   }
   .title {
-    display: inline-block;
+    display: flex;
+    align-items: center;
     white-space: nowrap;
+    color: #094a69;
+    text-decoration: none;
+    padding: 0 8px;
+    height: 45px;
+    line-height: 1px;
+    i {
+      margin-right: 15px;
+    }
   }
 }
 
-.title {
-  width: 100%;
-  color: #094a69;
-  margin-left: 10px;
-  text-decoration: none;
-}
-i {
-  margin-left: 10px;
-  margin-right: 10px;
-}
 </style>
