@@ -71,8 +71,8 @@ img {
 .sidebar {
   z-index: 1;
   width: 225px;
-
-  box-shadow: 1px 0px 3px gray;
+  margin-left: 3px;
+  box-shadow: 1px 0px 2px gray;
   transition: all 0.25s;
   overflow: hidden;
 }
