@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+//import Clasters from '../components/Clasters.vue'
 
 Vue.use(VueRouter)
 
@@ -10,11 +11,11 @@ const routes = [
     name: 'home',
     component: Home
   },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   component: () => import('../views/About.vue')
-  // }
+  {
+    path: '/clasters',
+    name: 'clasters',
+    component: () => import('../components/Clasters.vue')
+  }
 ]
 
 const router = new VueRouter({

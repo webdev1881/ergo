@@ -1,0 +1,20 @@
+export default [
+{"brand":"ERGO","val":0,"val2":0},
+{"brand":"LG","val":0,"val2":0},
+{"brand":"PHILIPS","val":0,"val2":0},
+{"brand":"HISENSE","val":0,"val2":0},
+{"brand":"ELENBERG","val":0,"val2":0},
+{"brand":"SAMSUNG","val":0,"val2":0},
+{"brand":"HITACHI","val":0,"val2":0},
+{"brand":"SETUP","val":0,"val2":0},
+{"brand":"SHARP","val":0,"val2":0},
+{"brand":"KIVI","val":0,"val2":0},
+{"brand":"SONY","val":0,"val2":0},
+{"brand":"BRAVIS","val":0,"val2":0},
+{"brand":"MI","val":0,"val2":0},
+{"brand":"SKYWORTH","val":0,"val2":0},
+{"brand":"TOSHIBA","val":0,"val2":0},
+{"brand":"JVC","val":0,"val2":0},
+{"brand":"PANASONIC","val":0,"val2":0},
+
+]

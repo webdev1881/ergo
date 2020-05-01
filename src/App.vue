@@ -36,6 +36,12 @@ export default {
 
 <style lang="scss">
 @import "~materialize-css/dist/css/materialize.min.css";
+
+* {
+  font-size: 14px;
+}
+
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   margin: 0;

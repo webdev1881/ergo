@@ -33,12 +33,10 @@ export default {
   props: ["value"],
   data: () => ({
     links: [
-      { title: "Счет", icon: "cloud", url: "/", exact: true },
-      { title: "История", icon: "cloud", url: "/history" },
-      { title: "Новая запись", icon: "cloud", url: "/record" },
-      { title: "Категории", icon: "cloud", url: "/categories" }
+      { title: "Главная", icon: "cloud", url: "/", exact: true },
+      { title: "Кластеры", icon: "cloud", url: "/clasters" },
     ],
-    isActive: false
+    isActive: true
   }),
   methods: {
     toggleNav() {
