@@ -1,66 +1,41 @@
 <template>
-  <div>555
-
-    <div>000</div>
-
+  <div>
+    
     <div v-if="isLoading" class="load">
-      <!-- <Loader /> -->
+      <Loader />
     </div>
 
-    <div>123</div>
-
-
-
+    <div> {{ json }} </div>
 
   </div>
-
-
 </template>
 
 <script>
-//import HomeCur from "@/components/HomeCur";
-
-import Gfk from '../data/gfk.json'
-
+import Gfk from "../data/gfk.json";
 
 export default {
   name: "clasters",
   data: () => ({
     isLoading: true,
-    clasters: null,
+    json: null
   }),
-  mounted() {
-    
-  //  console.log( 'disp:', Gfk );
-    
-    
 
+  async mounted() {
+    this.json = await this.$store.dispatch('fetchJson')
+    this.isLoading = false
   },
-  methods: {
-    // async refresh() {
-    //   this.isLoading = true
-    //   this.clasters = await this.$store.dispatch('fetchGfk')
-    //   console.log( this.clasters ) 
-    //   this.isLoading = false
-    // },
-  },
-  // components: { HomeBill, HomeCur }
+
+
+  methods: {},
+
+
 };
-
 </script>
 
 <style lang="scss" scoped>
-
-.btn {
-  min-width: 45px;
-}
-
 .load {
   display: flex;
   justify-content: center;
   padding-top: 40px;
 }
-       
-
-
 </style>

@@ -35,8 +35,9 @@ export default {
     links: [
       { title: "Главная", icon: "cloud", url: "/", exact: true },
       { title: "Кластеры", icon: "cloud", url: "/clasters" },
+      { title: "TeST", icon: "cloud", url: "/test" },
     ],
-    isActive: true
+    isActive: false
   }),
   methods: {
     toggleNav() {
@@ -68,7 +69,7 @@ img {
 
 .sidebar {
   z-index: 1;
-  width: 225px;
+  width: 152px;
   margin-left: 3px;
   box-shadow: 1px 0px 2px gray;
   transition: all 0.25s;

@@ -1,3 +1,4 @@
 export default function currencyFilter( val ) {
-    return val.toLocaleString();    
+    let num = +val.toFixed(0)
+    return num.toLocaleString(undefined, { minimumFractionDigits: 0 });    
 }

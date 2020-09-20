@@ -24,12 +24,14 @@
 import Home from "@/views/Home";
 import Sidebar from "@/views/Sidebar";
 
+
+console.log(  );
+
 export default {
   name: "home",
-
   components: {
     Sidebar,
-    Home
+    Home,  
   }
 };
 </script>
