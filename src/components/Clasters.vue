@@ -5,7 +5,7 @@
       <Loader />
     </div>
 
-    <div> {{ json }} </div>
+    <div> {{ weeksValue }} </div>
 
   </div>
 </template>
@@ -17,11 +17,11 @@ export default {
   name: "clasters",
   data: () => ({
     isLoading: true,
-    json: null
+    weeksValue: null
   }),
 
   async mounted() {
-    this.json = await this.$store.dispatch('fetchJson')
+    this.weeksValue = await this.$store.dispatch('fetchWeeksValue')
     this.isLoading = false
   },
 

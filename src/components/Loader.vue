@@ -23,7 +23,7 @@ export default {};
 
 <style lang="scss" scoped>
 .layer {
-
+  margin-top: 100px;;
   background-color: #fff;
   display: flex;
   width: 100%;

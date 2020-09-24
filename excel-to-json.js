@@ -5,7 +5,7 @@ xlsxj = require("xlsx-to-json");
 
 xlsxj({
     input: "./gfk-yug.xlsx",
-    output: "gfk.json",
+    output: "./public/gfk.json",
     sheet: "gfk"
 }, function (err, result) {
     if (err) {
@@ -18,7 +18,7 @@ xlsxj({
 
 xlsxj({
     input: "./gfk-yug.xlsx",
-    output: "yug.json",
+    output: "./public/yug.json",
     sheet: "yug"
 }, function (err, result) {
     if (err) {

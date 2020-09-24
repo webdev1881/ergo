@@ -28,7 +28,7 @@ import Sidebar from "@/views/Sidebar";
 console.log(  );
 
 export default {
-  name: "home",
+  name: "app",
   components: {
     Sidebar,
     Home,  
