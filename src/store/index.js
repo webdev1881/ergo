@@ -27,7 +27,24 @@ export default new Vuex.Store({
         }
         weeksValue.push({ week: weeks[w], units: sumUnits, uah: sumUAH })
       }
+      return weeksValue
+    },
 
+    async fetchWeeksValue2() {
+      const res = await fetch('./yug.json').then(res => res.json())
+      const weeks = Array.from(new Set(res.map(({ Week }) => Week)))
+      let weeksValue = []
+      for (let w in weeks) {
+        let sumUnits = 0
+        let sumUAH = 0
+        for (let v in res) {
+          if (weeks[w] === res[v]["Week"]) {
+            sumUnits = sumUnits + +res[v]["Sales Units"]
+            sumUAH = sumUAH + +res[v]["Sales Value UAH"]
+          }
+        }
+        weeksValue.push({ week: weeks[w], units: sumUnits, uah: sumUAH })
+      }
       return weeksValue
     }
 
