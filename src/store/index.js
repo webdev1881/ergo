@@ -12,42 +12,99 @@ export default new Vuex.Store({
 
   actions: {
 
-    async fetchWeeksValue() {
+    async fetchGfkWeeksValue() {
       const res = await fetch('./gfk.json').then(res => res.json())
       const weeks = Array.from(new Set(res.map(({ Week }) => Week)))
       let weeksValue = []
       for (let w in weeks) {
-        let sumUnits = 0
-        let sumUAH = 0
+        let units = 0
+        let uah = 0
         for (let v in res) {
           if (weeks[w] === res[v]["Week"]) {
-            sumUnits = sumUnits + +res[v]["Sales Units"]
-            sumUAH = sumUAH + +res[v]["Sales Value UAH"]
+            units = units + +res[v]["Sales Units"]
+            uah = uah + +res[v]["Sales Value UAH"]
           }
         }
-        weeksValue.push({ week: weeks[w], units: sumUnits, uah: sumUAH })
+        weeksValue.push({ week: weeks[w], units: units, uah: uah })
       }
       return weeksValue
     },
 
-    async fetchWeeksValue2() {
+    async fetchYugWeeksValue() {
       const res = await fetch('./yug.json').then(res => res.json())
       const weeks = Array.from(new Set(res.map(({ Week }) => Week)))
       let weeksValue = []
       for (let w in weeks) {
-        let sumUnits = 0
-        let sumUAH = 0
+        let units = 0
+        let uah = 0
         for (let v in res) {
           if (weeks[w] === res[v]["Week"]) {
-            sumUnits = sumUnits + +res[v]["Sales Units"]
-            sumUAH = sumUAH + +res[v]["Sales Value UAH"]
+            units = units + +res[v]["Sales Units"]
+            uah = uah + +res[v]["Sales Value UAH"]
           }
         }
-        weeksValue.push({ week: weeks[w], units: sumUnits, uah: sumUAH })
+        weeksValue.push({ week: weeks[w], units: units, uah: uah })
       }
       return weeksValue
-    }
+    },
 
+    async fetchGfkWeeksType() {
+      const res = await fetch('./gfk.json').then(res => res.json())
+      const weeks = Array.from(new Set(res.map(({ Week }) => Week)))
+      const clasters = Array.from(new Set(res.map(({ SIZE }) => SIZE)))
+
+      let weeksValue = []
+
+      for (let w in weeks) { // перебор уникальных недель
+        let weekClaster = clasters.reduce((newObj, item) => {
+          newObj[item] = 0
+          return newObj
+        }, {});     
+        for (let v in res) {
+          if (weeks[w] === res[v]["Week"]) {
+            for (let c in clasters) {
+              if (clasters[c] === res[v].SIZE) {
+                weekClaster[clasters[c]] = weekClaster[clasters[c]] + +res[v]["Sales Units"]
+              }
+            }
+
+          }
+        }
+        let weekGroupClaster = {
+          '32':0,
+          '40':0,
+          '43':0,
+          '50':0,
+          '55':0,
+          '60 >':0,
+        }
+        for (let g in weekClaster) {
+          switch (true) {
+            case g >= 31.5 && g <= 32:
+              weekGroupClaster[32] += weekClaster[g]
+              break;
+            case g >= 38.5 && g <= 40:
+              weekGroupClaster[40] += weekClaster[g]
+              break;
+            case g >= 42 && g <= 43:
+              weekGroupClaster[43] += weekClaster[g]
+              break;
+            case g >= 45 && g <= 50:
+              weekGroupClaster[50] += weekClaster[g]
+              break;
+            case g >= 54.6 && g <= 55:
+              weekGroupClaster[55] += weekClaster[g]
+              break;
+            case g >= 58:
+              weekGroupClaster['60 >'] += weekClaster[g]
+              break;
+          }         
+        }       
+        weeksValue.push( {week: weeks[w], clasters: weekGroupClaster} )
+      }
+console.log( weeksValue )
+      return weeksValue
+    }
 
 
   }

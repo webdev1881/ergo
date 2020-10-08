@@ -4,9 +4,7 @@
       <Loader />
     </div>
 
-    <canvas class="canvas" ref="canvas">
-      
-    </canvas>
+    <canvas class="canvas" ref="canvas"></canvas>
 
     <div class="control">
       <button v-if="!isLoading" class="waves-effect waves-light btn-small" @click="add">
@@ -43,7 +41,7 @@ export default {
             id: 'y-axis-1',
             ticks: {
               callback: function (label, index, labels) {
-                return (label / 1000).toFixed(0) + "k";
+                return (label / 1000).toFixed(1) + "k";
               },
             },
             scaleLabel: {
@@ -70,13 +68,17 @@ export default {
   }),
 
   async mounted() {
-    this.weeksValue = await this.$store.dispatch("fetchWeeksValue");
-    this.weeksValue2 = await this.$store.dispatch("fetchWeeksValue2");
+    this.weeksValue = await this.$store.dispatch("fetchGfkWeeksValue");
+    this.weeksValue2 = await this.$store.dispatch("fetchYugWeeksValue");
     this.render();
     this.isLoading = false;
+    this.onInput()
   },
 
   methods: {
+    onInput(){
+      this.$emit('changeLoading', this.isLoading);
+    },
 
     add() {
       let firstWeek = this.weeks.length;

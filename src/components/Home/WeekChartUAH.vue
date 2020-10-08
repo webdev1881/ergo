@@ -1,21 +1,19 @@
 <template>
-  <div class="week">
+  <div class="week" @click='onInput'>
     <div v-if="isLoading" class="load">
       <Loader />
     </div>
 
-    <canvas class="canvas" ref="canvas">
-      
-    </canvas>
+    <canvas class="canvas" ref="canvas"></canvas>
 
-    <div class="control">
+    <!-- <div class="control">
       <button v-if="!isLoading" class="waves-effect waves-light btn-small" @click="add">
         <i class="material-icons dp48">keyboard_arrow_left</i>
       </button>
       <button v-if="!isLoading" class="waves-effect waves-light btn-small" @click="remove">
         <i class="material-icons dp48">keyboard_arrow_right</i>
       </button>
-    </div>
+    </div> -->
     
 
   </div>
@@ -70,13 +68,18 @@ export default {
   }),
 
   async mounted() {
-    this.weeksValue = await this.$store.dispatch("fetchWeeksValue");
-    this.weeksValue2 = await this.$store.dispatch("fetchWeeksValue2");
-    this.render();
-    this.isLoading = false;
+    this.weeksValue = await this.$store.dispatch("fetchGfkWeeksValue")
+    this.weeksValue2 = await this.$store.dispatch("fetchYugWeeksValue")
+    this.render()
+    this.isLoading = false
+    this.onInput()
   },
 
   methods: {
+
+    onInput( ){
+      this.$emit('changeLoading', this.isLoading);
+    },
 
     add() {
       let firstWeek = this.weeks.length;
@@ -118,7 +121,7 @@ export default {
           labels: this.weeks.map((w) => w.week) || null,
           datasets: [
             {
-              label: "GFK uah",
+              label: "GFK UAH",
               yAxisID: 'y-axis-1',
               fill: false,
               backgroundColor: "rgb(63, 166, 236)",
@@ -126,7 +129,7 @@ export default {
               data: this.weeks.map((w) => w.uah),
             },
             {
-              label: "YUG uah",
+              label: "YUG UAH",
               yAxisID: 'y-axis-2',
               fill: false,
               backgroundColor: "rgb(255, 99, 132)",
