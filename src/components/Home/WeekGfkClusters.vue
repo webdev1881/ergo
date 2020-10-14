@@ -4,17 +4,7 @@
       <Loader />
     </div>
 
-    <canvas class="canvas" ref="canvas"></canvas>
-
-    <!-- <div class="control">
-      <button v-if="!isLoading" class="waves-effect waves-light btn-small" @click="add">
-        <i class="material-icons dp48">keyboard_arrow_left</i>
-      </button>
-      <button v-if="!isLoading" class="waves-effect waves-light btn-small" @click="remove">
-        <i class="material-icons dp48">keyboard_arrow_right</i>
-      </button>
-    </div> -->
-    
+    <canvas class="canvas" ref="canvas"></canvas>  
 
   </div>
 </template>
@@ -29,9 +19,7 @@ export default {
   data: () => ({
     isLoading: true,
     weeksValue: null,
-    weeksValue2: null,
     weeks: [],
-    weeks2: [],
     num: 6,
     options: {
       responsive: true,
@@ -60,10 +48,9 @@ export default {
       scales: {
         yAxes: [
           {
-            id: 'y-axis-1',
             ticks: {
               callback: function (label, index, labels) {
-                return (label / 1000).toFixed(1) + "k";
+                return (label / 1000).toFixed(0) + "k";
               },
             },
             scaleLabel: {
@@ -71,29 +58,21 @@ export default {
               labelString: "1k = 1000",
             },
           },
-          {
-            id: 'y-axis-2',
-            position: 'right',
-            ticks: {
-              callback: function (label, index, labels) {
-                return (label / 1000).toFixed(1) + "k";
-              },
-            },
-            scaleLabel: {
-              display: false,
-              labelString: "1k = 1000",
-            },
-          },
         ],
       },
+      
     },
   }),
 
   async mounted() {
-    this.weeksValue = await this.$store.dispatch("fetchGfkWeeksValue");
-    this.weeksValue2 = await this.$store.dispatch("fetchYugWeeksValue");
-    // console.log( this.weeksValue )
+    this.weeksValue = await this.$store.dispatch("fetchGfkWeeksClusters");
+
+    console.log( this.weeksValue )
+
     this.render();
+
+    // console.log( this.weeks);
+
     this.isLoading = false;
     this.onInput()
   },
@@ -106,14 +85,21 @@ export default {
     add() {
       let firstWeek = this.weeks.length;
       let newData = (this.weeksValue[this.weeksValue.length - 1 - firstWeek])
-      let newData2 = (this.weeksValue2[this.weeksValue2.length - 1 - firstWeek])
+
       if (this.weeks.length < this.weeksValue.length) {  
         this.weeks.unshift(newData)
-        this.weeks2.unshift(newData2)
+        // console.log( newData.clasters['32'] )
         this.$data._chart.data.labels.unshift(newData.week)
-        this.$data._chart.data.datasets[0].data.unshift(newData.units)
-        this.$data._chart.data.datasets[1].data.unshift(newData2.units)
-        this.$data._chart.update()     
+
+        this.$data._chart.data.datasets[0].data.unshift(newData.clasters['32'])
+        this.$data._chart.data.datasets[1].data.unshift(newData.clasters['40'])
+        this.$data._chart.data.datasets[2].data.unshift(newData.clasters['43'])
+        this.$data._chart.data.datasets[3].data.unshift(newData.clasters['50'])
+        this.$data._chart.data.datasets[4].data.unshift(newData.clasters['55'])
+        this.$data._chart.data.datasets[5].data.unshift(newData.clasters['60 >'])
+        // console.log( this.$data._chart.data.datasets[0].data )
+
+        this.$data._chart.update()
       }
     },
 
@@ -131,44 +117,72 @@ export default {
       }
     },
 
+    dataset() {
+
+    },
+
     render() {
       for (let i = this.num; i > 0; i--) {
         this.weeks.push(this.weeksValue[this.weeksValue.length - i])
       }
-      for (let i = this.num; i > 0; i--) {
-        this.weeks2.push(this.weeksValue2[this.weeksValue2.length - i])
-      }
+
       this.renderChart(
         {
           labels: this.weeks.map((w) => w.week) || null,
           datasets: [
             {
-              label: "GFK Units",
-              yAxisID: 'y-axis-1',
+              label: "32",
               fill: false,
-              backgroundColor: "rgb(63, 166, 236)",
-              borderColor: "rgb(63, 166, 236)",
-              data: this.weeks.map((w) => w.units),
+              backgroundColor: "#7d8fed",
+              borderColor: "#7d8fed",
+              data: this.weeks.map((w,i) => w.clasters['32']  ),
             },
             {
-              label: "YUG Units",
-              yAxisID: 'y-axis-2',
+              label: "40",
               fill: false,
-              backgroundColor: "rgb(255, 99, 132)",
-              borderColor: "rgb(255, 99, 132)",
-              data: this.weeks2.map((w) => w.units),
+              backgroundColor: "#677df8",
+              borderColor: "#677df8",
+              data: this.weeks.map((w,i) => w.clasters['40'] ),
             },
-          ],
+            {
+              label: "43",
+              fill: false,
+              backgroundColor: "#4863f5",
+              borderColor: "#4863f5",
+              data: this.weeks.map((w,i) => w.clasters['43'] ),
+            },
+            {
+              label: "50",
+              fill: false,
+              backgroundColor: "#2746ed",
+              borderColor: "#2746ed",
+              data: this.weeks.map((w,i) => w.clasters['50'] ),
+            },
+            {
+              label: "55",
+              fill: false,
+              backgroundColor: "#0c2bd0",
+              borderColor: "#0c2bd0",
+              data: this.weeks.map((w,i) => w.clasters['55'] ),
+            },
+            {
+              label: "60 >",
+              fill: false,
+              backgroundColor: "#01178d",
+              borderColor: "#01178d",
+              data: this.weeks.map((w,i) => w.clasters['60 >'] ),
+            },
+          ]
         }, 
         this.options);
     },
 
 
   },
-  beforeDestroy () {
-    this.$data._chart.destroy()
-    console.log( 'Chart destroyed' );
-  },
+//   beforeDestroy () {
+//     this.$data._chart.destroy()
+//     console.log( 'Chart destroyed' );
+//   },
 }
 </script>
 

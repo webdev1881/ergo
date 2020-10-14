@@ -21,7 +21,7 @@ export default {
   }),
 
   async mounted() {
-    this.weeksValue = await this.$store.dispatch('fetchGfkWeeksType')
+    this.weeksValue = await this.$store.dispatch('fetchGfkWeeksClusters')
     this.isLoading = false
   },
 

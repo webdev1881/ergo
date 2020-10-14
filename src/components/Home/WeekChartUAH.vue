@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import { Line } from "vue-chartjs";
+import { Line } from "vue-chartjs"
 
 
 export default {
-  name: "WeekChartUnits",
+  name: "WeekChartUAH",
   extends: Line,
   data: () => ({
     isLoading: true,
@@ -35,10 +35,32 @@ export default {
     num: 6,
     options: {
       responsive: true,
+
+      // plugins: {
+      //   datalabels: {
+      //     id: 'y-axis-1',
+      //     backgroundColor: function(context) {
+      //       return context.dataset.backgroundColor
+      //     },
+      //     formatter: function(value, context) {
+      //         return (value/1000000).toFixed(1)
+      //     },
+      //     display: 'auto',
+      //     anchor: 'start',
+      //     align : 'top',
+      //     color: 'white',
+      //     value: {
+      //       callback: function (label, index, labels) {
+      //         return (value / 1000).toFixed(1) + "k";
+      //       }
+      //     },
+      //   }
+      // },
+      
       scales: {
         yAxes: [
           {
-            id: 'y-axis-1',
+            id: 'y-axis-3',
             ticks: {
               callback: function (label, index, labels) {
                 return (label / 1000000).toFixed(0) + "m" ;
@@ -50,7 +72,7 @@ export default {
             },
           },
           {
-            id: 'y-axis-2',
+            id: 'y-axis-4',
             position: 'right',
             ticks: {
               callback: function (label, index, labels) {
@@ -122,7 +144,7 @@ export default {
           datasets: [
             {
               label: "GFK UAH",
-              yAxisID: 'y-axis-1',
+              yAxisID: 'y-axis-3',
               fill: false,
               backgroundColor: "rgb(63, 166, 236)",
               borderColor: "rgb(63, 166, 236)",
@@ -130,7 +152,7 @@ export default {
             },
             {
               label: "YUG UAH",
-              yAxisID: 'y-axis-2',
+              yAxisID: 'y-axis-4',
               fill: false,
               backgroundColor: "rgb(255, 99, 132)",
               borderColor: "rgb(255, 99, 132)",

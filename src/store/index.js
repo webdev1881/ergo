@@ -48,7 +48,7 @@ export default new Vuex.Store({
       return weeksValue
     },
 
-    async fetchGfkWeeksType() {
+    async fetchGfkWeeksClusters() {
       const res = await fetch('./gfk.json').then(res => res.json())
       const weeks = Array.from(new Set(res.map(({ Week }) => Week)))
       const clasters = Array.from(new Set(res.map(({ SIZE }) => SIZE)))
@@ -102,7 +102,7 @@ export default new Vuex.Store({
         }       
         weeksValue.push( {week: weeks[w], clasters: weekGroupClaster} )
       }
-console.log( weeksValue )
+      // console.log( weeksValue )
       return weeksValue
     }
 
