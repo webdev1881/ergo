@@ -18,21 +18,11 @@
         </div>
       </div>
 
-      <div class="clasters">
-        <div class="title">Clusters</div>
-        <div class="charts">
-          <WeekGfkClusters @changeLoading="loadedUnits" />
-          <WeekYugClusters @changeLoading="loadedUah" />
-        </div>
-        <div class="arrows" v-show="isLoadedUnits && isLoadedUah">
-          <button class="waves-effect waves-light btn-small" @click="addWeeksClaster">
-            <i class="material-icons dp48">keyboard_arrow_left</i>
-          </button>
-          <button class="waves-effect waves-light btn-small" @click="removeWeeks">
-            <i class="material-icons dp48">keyboard_arrow_right</i>
-          </button>
-        </div>
+      <div class="asp">
+
       </div>
+
+      
 
     </div>
 
@@ -45,8 +35,6 @@
 import WeekChartUnits from "@/components/Home/WeekChartUnits";
 import WeekChartUAH from "@/components/Home/WeekChartUAH";
 
-import WeekGfkClusters from "@/components/Home/WeekGfkClusters";
-import WeekYugClusters from "@/components/Home/WeekYugClusters";
 
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
@@ -58,7 +46,7 @@ export default {
   }),
 
   async mounted() {
-    Chart.defaults.global.plugins.datalabels.display = false;
+    Chart.defaults.global.plugins.datalabels.display = false
   },
   watch: {},
 
@@ -71,13 +59,11 @@ export default {
     },
 
     addWeeks() {
+      // console.log(this.$children)
       this.$children[0].add()
       this.$children[1].add()
     },
-    addWeeksClaster() {
-      // console.log(this.$children);
-      this.$children[2].add()
-    },
+
     removeWeeks() {
       this.$children[0].remove();
       this.$children[1].remove();
@@ -87,8 +73,7 @@ export default {
   components: {
     WeekChartUnits,
     WeekChartUAH,
-    WeekGfkClusters,
-    WeekYugClusters,
+
   },
 };
 </script>

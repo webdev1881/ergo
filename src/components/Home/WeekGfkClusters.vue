@@ -4,7 +4,11 @@
       <Loader />
     </div>
 
-    <canvas class="canvas" ref="canvas"></canvas>  
+      <canvas class="canvas" ref="canvas"></canvas> 
+
+    
+
+     
 
   </div>
 </template>
@@ -24,32 +28,37 @@ export default {
     options: {
       responsive: true,
 
-      // plugins: {
-      //   datalabels: {
-      //     id: 'y-axis-1',
-      //     backgroundColor: function(context) {
-      //       return context.dataset.backgroundColor
-      //     },
-      //     formatter: function(value, context) {
-      //         return (value/1000).toFixed(1)
-      //     },
-      //     display: 'auto',
-      //     anchor: 'start',
-      //     align : 'top',
-      //     color: 'white',
-      //     value: {
-      //       callback: function (label, index, labels) {
-      //         return (value / 1000).toFixed(1) + "k";
-      //       }
-      //     },
-      //   }
-      // },
+      plugins: {
+        datalabels: {
+          id: 'y-axis-1',
+          backgroundColor: function(context) {
+            
+            return context.dataset.backgroundColor
+          },
+          formatter: function(value, context) {
+            // context.dataset.backgroundColor = 'red'
+              return (value/1000).toFixed(1)
+          },
+          display: 'auto',
+          anchor: 'start',
+          align : 'top',
+          color: 'white',
+          value: {
+            callback: function (label, index, labels) {
+              
+              return (value / 1000).toFixed(1) + "k";
+            }
+          },
+        }
+      },
 
       scales: {
         yAxes: [
           {
             ticks: {
+              backdropColor: 'black',
               callback: function (label, index, labels) {
+                
                 return (label / 1000).toFixed(0) + "k";
               },
             },
@@ -59,27 +68,39 @@ export default {
             },
           },
         ],
+        xAxes: [
+          {
+            ticks: {
+              callback: function (label, index, labels) {
+                console.log( this );
+                if(index === 3) {
+                  return label
+                }
+                // console.log( labels );
+                return label
+              },
+            },
+            scaleLabel: {
+              // display: true,
+            },
+          },
+        ],
       },
       
     },
   }),
 
   async mounted() {
-    this.weeksValue = await this.$store.dispatch("fetchGfkWeeksClusters");
+    this.weeksValue = await this.$store.dispatch("fetchAll")
 
-    console.log( this.weeksValue )
-
-    this.render();
-
-    // console.log( this.weeks);
-
-    this.isLoading = false;
+    this.render()
+    this.isLoading = false
     this.onInput()
   },
 
   methods: {
     onInput(){
-      this.$emit('changeLoading', this.isLoading);
+      this.$emit('changeLoading', this.isLoading)
     },
 
     add() {
@@ -88,16 +109,12 @@ export default {
 
       if (this.weeks.length < this.weeksValue.length) {  
         this.weeks.unshift(newData)
-        // console.log( newData.clasters['32'] )
         this.$data._chart.data.labels.unshift(newData.week)
-
         this.$data._chart.data.datasets[0].data.unshift(newData.clasters['32'])
         this.$data._chart.data.datasets[1].data.unshift(newData.clasters['40'])
         this.$data._chart.data.datasets[2].data.unshift(newData.clasters['43'])
         this.$data._chart.data.datasets[3].data.unshift(newData.clasters['50'])
-        this.$data._chart.data.datasets[4].data.unshift(newData.clasters['55'])
-        this.$data._chart.data.datasets[5].data.unshift(newData.clasters['60 >'])
-        // console.log( this.$data._chart.data.datasets[0].data )
+        this.$data._chart.data.datasets[4].data.unshift(newData.clasters['60 >'])
 
         this.$data._chart.update()
       }
@@ -106,13 +123,19 @@ export default {
     remove() {
       let firstWeek = this.weeks.length;
       let newData = (this.weeksValue[this.weeksValue.length - firstWeek])
-      let newData2 = (this.weeksValue[this.weeksValue.length - firstWeek])
+      // let newData2 = (this.weeksValue[this.weeksValue.length - firstWeek])
       if (this.weeks.length <= this.weeksValue.length && this.weeks.length > 2) {       
         this.weeks.shift(newData)
-        this.weeks2.shift(newData2)
+        // this.weeks2.shift(newData2)
         this.$data._chart.data.labels.shift(newData.week)
+
         this.$data._chart.data.datasets[0].data.shift(newData.units)
-        this.$data._chart.data.datasets[1].data.shift(newData2.units)
+        this.$data._chart.data.datasets[1].data.shift(newData.units)
+        this.$data._chart.data.datasets[2].data.shift(newData.units)
+        this.$data._chart.data.datasets[3].data.shift(newData.units)
+        this.$data._chart.data.datasets[4].data.shift(newData.units)
+        // this.$data._chart.data.datasets[5].data.shift(newData.units)
+
         this.$data._chart.update()     
       }
     },
@@ -159,13 +182,6 @@ export default {
               data: this.weeks.map((w,i) => w.clasters['50'] ),
             },
             {
-              label: "55",
-              fill: false,
-              backgroundColor: "#0c2bd0",
-              borderColor: "#0c2bd0",
-              data: this.weeks.map((w,i) => w.clasters['55'] ),
-            },
-            {
               label: "60 >",
               fill: false,
               backgroundColor: "#01178d",
@@ -179,14 +195,15 @@ export default {
 
 
   },
-//   beforeDestroy () {
-//     this.$data._chart.destroy()
-//     console.log( 'Chart destroyed' );
-//   },
+  beforeDestroy () {
+    this.$data._chart.destroy()
+    console.log( 'Chart destroyed WeekGfkClusters' );
+  },
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped >
+
 .week {
   width: 50%;
 }
