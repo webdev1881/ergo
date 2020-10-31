@@ -13,7 +13,7 @@ const routes = [
   {
     path: '/clasters',
     name: 'clasters',
-    component: () => import('../components/Clasters.vue')
+    component: () => import('../views/Clasters.vue')
   }
 ]
 

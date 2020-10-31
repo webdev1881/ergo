@@ -71,7 +71,7 @@ img {
   z-index: 1;
   width: 152px; // ______________________________
   margin-left: 3px;
-  box-shadow: 1px 0px 2px gray;
+  box-shadow: 2px 0px 0px gray;
   transition: all 0.25s;
   overflow: hidden;
 }

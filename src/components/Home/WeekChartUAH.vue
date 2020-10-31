@@ -1,20 +1,10 @@
 <template>
-  <div class="week" @click='onInput'>
+  <div class="week">
     <div v-if="isLoading" class="load">
       <Loader />
     </div>
 
     <canvas class="canvas" ref="canvas"></canvas>
-
-    <!-- <div class="control">
-      <button v-if="!isLoading" class="waves-effect waves-light btn-small" @click="add">
-        <i class="material-icons dp48">keyboard_arrow_left</i>
-      </button>
-      <button v-if="!isLoading" class="waves-effect waves-light btn-small" @click="remove">
-        <i class="material-icons dp48">keyboard_arrow_right</i>
-      </button>
-    </div> -->
-    
 
   </div>
 </template>
@@ -24,14 +14,16 @@ import { Line } from "vue-chartjs"
 
 
 export default {
-  name: "WeekChartUAH",
+  name: "WeekChartUnits",
   extends: Line,
   data: () => ({
     isLoading: true,
-    weeksValue: null,
-    weeksValue2: null,
-    weeks: [],
-    weeks2: [],
+    weeksValueGfk: null,
+    weeksValueYug: null,
+    weeksGfk: [],
+    weeksYug: [],
+    urlGfk: './gfk.json',
+    urlYug: './yug.json',
     num: 6,
     options: {
       responsive: true,
@@ -43,7 +35,7 @@ export default {
       //       return context.dataset.backgroundColor
       //     },
       //     formatter: function(value, context) {
-      //         return (value/1000000).toFixed(1)
+      //         return (value/1000).toFixed(1)
       //     },
       //     display: 'auto',
       //     anchor: 'start',
@@ -56,32 +48,32 @@ export default {
       //     },
       //   }
       // },
-      
+
       scales: {
         yAxes: [
           {
-            id: 'y-axis-3',
+            id: 'y-axis-1',
             ticks: {
               callback: function (label, index, labels) {
-                return (label / 1000000).toFixed(0) + "m" ;
+                return (label / 1000000).toFixed(0) + " k";
               },
             },
             scaleLabel: {
               display: true,
-              labelString: "1M = 1 000 000",
+              labelString: "1k = 1000",
             },
           },
           {
-            id: 'y-axis-4',
+            id: 'y-axis-2',
             position: 'right',
             ticks: {
               callback: function (label, index, labels) {
-                return (label / 1000000).toFixed(1)  + "m";
+                return (label / 1000000).toFixed(0) + " k";
               },
             },
             scaleLabel: {
               display: false,
-              labelString: "1M = 1 000 000",
+              labelString: "1k = 1000",
             },
           },
         ],
@@ -90,91 +82,96 @@ export default {
   }),
 
   async mounted() {
-    this.weeksValue = await this.$store.dispatch("fetchGfkWeeksValue")
-    this.weeksValue2 = await this.$store.dispatch("fetchYugWeeksValue")
-    this.render()
-    this.isLoading = false
+    this.weeksValueGfk = await this.$store.dispatch("fetchJson", this.urlGfk);
+    this.weeksValueYug = await this.$store.dispatch("fetchJson", this.urlYug);
+    // console.log( this.weeksValueGfk )
+    this.render();
+    this.isLoading = false;
     this.onInput()
   },
 
   methods: {
-
-    onInput( ){
+    onInput(){
       this.$emit('changeLoading', this.isLoading);
     },
 
     add() {
-      let firstWeek = this.weeks.length;
-      let newData = (this.weeksValue[this.weeksValue.length - 1 - firstWeek])
-      let newData2 = (this.weeksValue2[this.weeksValue2.length - 1 - firstWeek])
-      if (this.weeks.length < this.weeksValue.length) {  
-        this.weeks.unshift(newData)
-        this.weeks2.unshift(newData2)
-        this.$data._chart.data.labels.unshift(newData.week)
-        this.$data._chart.data.datasets[0].data.unshift(newData.uah)
-        this.$data._chart.data.datasets[1].data.unshift(newData2.uah)
+      let firstWeek = this.weeksGfk.length;
+      let newDataGfk = (this.weeksValueGfk[this.weeksValueGfk.length - 1 - firstWeek])
+      let newDataYug = (this.weeksValueYug[this.weeksValueYug.length - 1 - firstWeek])
+      if (this.weeksGfk.length < this.weeksValueGfk.length) {  
+        this.weeksGfk.unshift(newDataGfk)
+        this.weeksYug.unshift(newDataYug)
+        this.$data._chart.data.labels.unshift(newDataGfk.week)
+        this.$data._chart.data.datasets[0].data.unshift(newDataGfk.uah)
+        this.$data._chart.data.datasets[1].data.unshift(newDataYug.uah)
         this.$data._chart.update()     
       }
     },
 
     remove() {
-      let firstWeek = this.weeks.length;
-      let newData = (this.weeksValue[this.weeksValue.length - firstWeek])
-      let newData2 = (this.weeksValue[this.weeksValue.length - firstWeek])
-      if (this.weeks.length <= this.weeksValue.length && this.weeks.length > 2) {       
-        this.weeks.shift(newData)
-        this.weeks2.shift(newData2)
-        this.$data._chart.data.labels.shift(newData.week)
-        this.$data._chart.data.datasets[0].data.shift(newData.uah)
-        this.$data._chart.data.datasets[1].data.shift(newData2.uah)
+      let firstWeek = this.weeksGfk.length;
+      let newDataGfk = (this.weeksValueGfk[this.weeksValueGfk.length - firstWeek])
+      let newDataYug = (this.weeksValueGfk[this.weeksValueGfk.length - firstWeek])
+      if (this.weeksGfk.length <= this.weeksValueGfk.length && this.weeksGfk.length > 2) {       
+        this.weeksGfk.shift(newDataGfk)
+        this.weeksYug.shift(newDataYug)
+        this.$data._chart.data.labels.shift(newDataGfk.week)
+        this.$data._chart.data.datasets[0].data.shift(newDataGfk.uah)
+        this.$data._chart.data.datasets[1].data.shift(newDataYug.uah)
         this.$data._chart.update()     
       }
     },
 
     render() {
       for (let i = this.num; i > 0; i--) {
-        this.weeks.push(this.weeksValue[this.weeksValue.length - i])
+        this.weeksGfk.push(this.weeksValueGfk[this.weeksValueGfk.length - i])
       }
       for (let i = this.num; i > 0; i--) {
-        this.weeks2.push(this.weeksValue2[this.weeksValue2.length - i])
+        this.weeksYug.push(this.weeksValueYug[this.weeksValueYug.length - i])
       }
       this.renderChart(
         {
-          labels: this.weeks.map((w) => w.week) || null,
+          labels: this.weeksGfk.map((w) => w.week) || null,
           datasets: [
             {
-              label: "GFK UAH",
-              yAxisID: 'y-axis-3',
+              label: "GFK Units",
+              yAxisID: 'y-axis-1',
               fill: false,
               backgroundColor: "rgb(63, 166, 236)",
               borderColor: "rgb(63, 166, 236)",
-              data: this.weeks.map((w) => w.uah),
+              data: this.weeksGfk.map((w) => w.uah),
             },
             {
-              label: "YUG UAH",
-              yAxisID: 'y-axis-4',
+              label: "YUG Units",
+              yAxisID: 'y-axis-2',
               fill: false,
               backgroundColor: "rgb(255, 99, 132)",
               borderColor: "rgb(255, 99, 132)",
-              data: this.weeks2.map((w) => w.uah),
+              data: this.weeksYug.map((w) => w.uah),
             },
           ],
-        }, this.options);
+        }, 
+        this.options);
     },
 
 
   },
-};
+  beforeDestroy () {
+    this.$data._chart.destroy()
+    console.log( 'Chart destroyed WeekChartUAH' );
+  },
+}
 </script>
 
-<style lang="scss" scoped >
+<style lang="scss" >
 .week {
   width: 50%;
 }
 .control {
-    display: flex;
-    justify-content: center;
-    display: none;
+  display: flex;
+  justify-content: center;
+  display: none;
 }
 .btn-small {
   margin: 0 10px 0 10px;

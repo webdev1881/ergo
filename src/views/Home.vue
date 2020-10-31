@@ -59,7 +59,6 @@ export default {
     },
 
     addWeeks() {
-      // console.log(this.$children)
       this.$children[0].add()
       this.$children[1].add()
     },

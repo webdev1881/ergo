@@ -4,17 +4,7 @@
       <Loader />
     </div>
 
-    <canvas class="canvas" ref="canvas"></canvas>
-
-    <!-- <div class="control">
-      <button v-if="!isLoading" class="waves-effect waves-light btn-small" @click="add">
-        <i class="material-icons dp48">keyboard_arrow_left</i>
-      </button>
-      <button v-if="!isLoading" class="waves-effect waves-light btn-small" @click="remove">
-        <i class="material-icons dp48">keyboard_arrow_right</i>
-      </button>
-    </div> -->
-    
+    <canvas class="canvas" ref="canvas"></canvas>   
 
   </div>
 </template>
@@ -28,10 +18,12 @@ export default {
   extends: Line,
   data: () => ({
     isLoading: true,
-    weeksValue: null,
-    weeksValue2: null,
-    weeks: [],
-    weeks2: [],
+    weeksValueGfk: null,
+    weeksValueYug: null,
+    weeksGfk: [],
+    weeksYug: [],
+    urlGfk: './gfk.json',
+    urlYug: './yug.json',
     num: 6,
     options: {
       responsive: true,
@@ -90,9 +82,8 @@ export default {
   }),
 
   async mounted() {
-    this.weeksValue = await this.$store.dispatch("fetchGfkWeeksValue");
-    this.weeksValue2 = await this.$store.dispatch("fetchYugWeeksValue");
-    // console.log( this.weeksValue )
+    this.weeksValueGfk = await this.$store.dispatch("fetchJson", this.urlGfk);
+    this.weeksValueYug = await this.$store.dispatch("fetchJson", this.urlYug);
     this.render();
     this.isLoading = false;
     this.onInput()
@@ -104,43 +95,43 @@ export default {
     },
 
     add() {
-      let firstWeek = this.weeks.length;
-      let newData = (this.weeksValue[this.weeksValue.length - 1 - firstWeek])
-      let newData2 = (this.weeksValue2[this.weeksValue2.length - 1 - firstWeek])
-      if (this.weeks.length < this.weeksValue.length) {  
-        this.weeks.unshift(newData)
-        this.weeks2.unshift(newData2)
-        this.$data._chart.data.labels.unshift(newData.week)
-        this.$data._chart.data.datasets[0].data.unshift(newData.units)
-        this.$data._chart.data.datasets[1].data.unshift(newData2.units)
+      let firstWeek = this.weeksGfk.length;
+      let newDataGfk = (this.weeksValueGfk[this.weeksValueGfk.length - 1 - firstWeek])
+      let newDataYug = (this.weeksValueYug[this.weeksValueYug.length - 1 - firstWeek])
+      if (this.weeksGfk.length < this.weeksValueGfk.length) {  
+        this.weeksGfk.unshift(newDataGfk)
+        this.weeksYug.unshift(newDataYug)
+        this.$data._chart.data.labels.unshift(newDataGfk.week)
+        this.$data._chart.data.datasets[0].data.unshift(newDataGfk.units)
+        this.$data._chart.data.datasets[1].data.unshift(newDataYug.units)
         this.$data._chart.update()     
       }
     },
 
     remove() {
-      let firstWeek = this.weeks.length;
-      let newData = (this.weeksValue[this.weeksValue.length - firstWeek])
-      let newData2 = (this.weeksValue[this.weeksValue.length - firstWeek])
-      if (this.weeks.length <= this.weeksValue.length && this.weeks.length > 2) {       
-        this.weeks.shift(newData)
-        this.weeks2.shift(newData2)
-        this.$data._chart.data.labels.shift(newData.week)
-        this.$data._chart.data.datasets[0].data.shift(newData.units)
-        this.$data._chart.data.datasets[1].data.shift(newData2.units)
+      let firstWeek = this.weeksGfk.length;
+      let newDataGfk = (this.weeksValueGfk[this.weeksValueGfk.length - firstWeek])
+      let newDataYug = (this.weeksValueGfk[this.weeksValueGfk.length - firstWeek])
+      if (this.weeksGfk.length <= this.weeksValueGfk.length && this.weeksGfk.length > 2) {       
+        this.weeksGfk.shift(newDataGfk)
+        this.weeksYug.shift(newDataYug)
+        this.$data._chart.data.labels.shift(newDataGfk.week)
+        this.$data._chart.data.datasets[0].data.shift(newDataGfk.units)
+        this.$data._chart.data.datasets[1].data.shift(newDataYug.units)
         this.$data._chart.update()     
       }
     },
 
     render() {
       for (let i = this.num; i > 0; i--) {
-        this.weeks.push(this.weeksValue[this.weeksValue.length - i])
+        this.weeksGfk.push(this.weeksValueGfk[this.weeksValueGfk.length - i])
       }
       for (let i = this.num; i > 0; i--) {
-        this.weeks2.push(this.weeksValue2[this.weeksValue2.length - i])
+        this.weeksYug.push(this.weeksValueYug[this.weeksValueYug.length - i])
       }
       this.renderChart(
         {
-          labels: this.weeks.map((w) => w.week) || null,
+          labels: this.weeksGfk.map((w) => w.week) || null,
           datasets: [
             {
               label: "GFK Units",
@@ -148,7 +139,7 @@ export default {
               fill: false,
               backgroundColor: "rgb(63, 166, 236)",
               borderColor: "rgb(63, 166, 236)",
-              data: this.weeks.map((w) => w.units),
+              data: this.weeksGfk.map((w) => w.units),
             },
             {
               label: "YUG Units",
@@ -156,7 +147,7 @@ export default {
               fill: false,
               backgroundColor: "rgb(255, 99, 132)",
               borderColor: "rgb(255, 99, 132)",
-              data: this.weeks2.map((w) => w.units),
+              data: this.weeksYug.map((w) => w.units),
             },
           ],
         }, 
@@ -167,7 +158,7 @@ export default {
   },
   beforeDestroy () {
     this.$data._chart.destroy()
-    console.log( 'Chart destroyed' );
+    console.log( 'Chart destroyed WeekChartUnits' );
   },
 }
 </script>

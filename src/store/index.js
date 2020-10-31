@@ -9,178 +9,78 @@ export default new Vuex.Store({
     brands: null
   },
 
-
   actions: {
 
-    async fetchGfkWeeksValue() {
-      const res = await fetch('./gfk.json').then(res => res.json())
-      const weeks = Array.from(new Set(res.map(({ Week }) => Week)))
-      let weeksValue = []
-      for (let w in weeks) {
-        let units = 0
-        let uah = 0
-        for (let v in res) {
-          if (weeks[w] === res[v]["Week"]) {
-            units = units + +res[v]["Sales Units"]
-            uah = uah + +res[v]["Sales Value UAH"]
-          }
-        }
-        weeksValue.push({ week: weeks[w], units: units, uah: uah })
-      }
-      return weeksValue
-    },
-
-    async fetchYugWeeksValue() {
-      const res = await fetch('./yug.json').then(res => res.json())
-      const weeks = Array.from(new Set(res.map(({ Week }) => Week)))
-      let weeksValue = []
-      for (let w in weeks) {
-        let units = 0
-        let uah = 0
-        for (let v in res) {
-          if (weeks[w] === res[v]["Week"]) {
-            units = units + +res[v]["Sales Units"]
-            uah = uah + +res[v]["Sales Value UAH"]
-          }
-        }
-        weeksValue.push({ week: weeks[w], units: units, uah: uah })
-      }
-      return weeksValue
-    },
-
-    async fetchGfkWeeksClusters() {
-      const res = await fetch('./gfk.json').then(res => res.json())
-      const weeks = Array.from(new Set(res.map(({ Week }) => Week)))
-      const clasters = Array.from(new Set(res.map(({ SIZE }) => SIZE)))
-
-      let weeksValue = []
-
-      for (let w in weeks) { // перебор уникальных недель
-        let weekClaster = clasters.reduce((newObj, item) => {
-          newObj[item] = 0
-          return newObj
-        }, {});     
-        for (let v in res) {
-          if (weeks[w] === res[v]["Week"]) {
-            for (let c in clasters) {
-              if (clasters[c] === res[v].SIZE) {
-                weekClaster[clasters[c]] = weekClaster[clasters[c]] + +res[v]["Sales Units"]
-              }
-            }
-
-          }
-        }
-        let weekGroupClaster = {
-          '32':0,
-          '40':0,
-          '43':0,
-          '50':0,
-          '60 >':0,
-        }
-        for (let g in weekClaster) {
-          switch (true) {
-            case g >= 31.5 && g <= 32:
-              weekGroupClaster[32] += weekClaster[g]
-              break;
-            case g >= 38.5 && g <= 40:
-              weekGroupClaster[40] += weekClaster[g]
-              break;
-            case g >= 42 && g <= 43:
-              weekGroupClaster[43] += weekClaster[g]
-              break;
-            case g >= 45 && g <= 55:
-              weekGroupClaster[50] += weekClaster[g]
-              break;
-            case g >= 58:
-              weekGroupClaster['60 >'] += weekClaster[g]
-              break;
-          }         
-        }       
-        weeksValue.push( {week: weeks[w], clasters: weekGroupClaster} )
-      }
-      // console.log( weeksValue )
-      return weeksValue
-    },
-
-    async fetchAll() {
-      const res = await fetch('./gfk.json').then(res => res.json())
+    async fetchJson({dispatch, commit}, url) {
+      const res = await fetch(url).then(res => res.json())
       const weeks = Array.from(new Set(res.map(({ Week }) => Week)))
       const clasters = Array.from(new Set(res.map(({ SIZE }) => SIZE)))
       const brands = Array.from(new Set(res.map(({ BRAND }) => BRAND)))
-
       let weeksValue = []
 
       for (let w in weeks) { // перебор уникальных недель
+        let units = 0
+        let uah = 0
 
         let weekClaster = clasters.reduce((newObj, item) => {
-          newObj[item] = 0
+          newObj[item] = {"UNITS": 0,"UAH": 0}
           return newObj
         }, {})
 
         let weekBrands = brands.reduce((newObj, item) => {
-          newObj[item] = 0
+          newObj[item] = {"UNITS": 0,"UAH": 0}
           return newObj
         }, {})
 
-        // console.log(weekBrands)
-        // break
-
-        for (let v in res) {
-
+        for (let v in res) {         
           if (weeks[w] === res[v]["Week"]) {
-
-            for (let c in clasters) { // clasters
+            units = units + +res[v]["Sales Units"] //________________total units
+            uah = uah + +res[v]["Sales Value UAH"] //________________total uah
+            for (let c in clasters) { // _____________________________clasters
               if (clasters[c] === res[v].SIZE) {
-                weekClaster[clasters[c]] = weekClaster[clasters[c]] + +res[v]["Sales Units"]
+                weekClaster[clasters[c]].UNITS = weekClaster[clasters[c]].UNITS + +res[v]["Sales Units"]
+                weekClaster[clasters[c]].UAH = weekClaster[clasters[c]].UAH + +res[v]["Sales Value UAH"]
               }
             }
-
-            for (let b in brands) { // brands
+            for (let b in brands) { //________________________________ brands
               if (brands[b] === res[v].BRAND) {
-                weekBrands[brands[b]] = weekBrands[brands[b]] + +res[v]["Sales Units"]
+                weekBrands[brands[b]].UNITS = weekBrands[brands[b]].UNITS + +res[v]["Sales Units"]
+                weekBrands[brands[b]].UAH = weekBrands[brands[b]].UAH + +res[v]["Sales Value UAH"]
               }
             }
-
           }
-
         }
         let weekGroupClaster = {
-          '32':0,
-          '40':0,
-          '43':0,
-          '50':0,
-          '55':0,
-          '60 >':0,
+          '32':{"UNITS": 0,"UAH": 0},
+          '43':{"UNITS": 0,"UAH": 0},
+          '50':{"UNITS": 0,"UAH": 0},
+          '60 >':{"UNITS": 0,"UAH": 0},
         }
         for (let g in weekClaster) { // switch
           switch (true) {
             case g >= 31.5 && g <= 32:
-              weekGroupClaster[32] += weekClaster[g]
+              weekGroupClaster[32].UNITS += weekClaster[g].UNITS
+              weekGroupClaster[32].UAH += weekClaster[g].UAH
               break;
-            case g >= 38.5 && g <= 40:
-              weekGroupClaster[40] += weekClaster[g]
+            case g >= 33 && g <= 45:
+              weekGroupClaster[43].UNITS += weekClaster[g].UNITS
+              weekGroupClaster[43].UAH += weekClaster[g].UAH
               break;
-            case g >= 42 && g <= 43:
-              weekGroupClaster[43] += weekClaster[g]
+            case g >= 46 && g <= 55:
+              weekGroupClaster[50].UNITS += weekClaster[g].UNITS
+              weekGroupClaster[50].UAH += weekClaster[g].UAH
               break;
-            case g >= 45 && g <= 50:
-              weekGroupClaster[50] += weekClaster[g]
-              break;
-            case g >= 54.6 && g <= 55:
-              weekGroupClaster[55] += weekClaster[g]
-              break;
-            case g >= 58:
-              weekGroupClaster['60 >'] += weekClaster[g]
+            case g >= 56:
+              weekGroupClaster['60 >'].UNITS += weekClaster[g].UNITS
+              weekGroupClaster['60 >'].UAH += weekClaster[g].UAH
               break;
           }         
         }       
-        weeksValue.push( {week: weeks[w], clasters: weekGroupClaster, brands: weekBrands} )
+        weeksValue.push( {week: weeks[w], clasters: weekGroupClaster, brands: weekBrands, units: units, uah: uah} )
       }
       // console.log( weeksValue )
       return weeksValue
     }
-
-
   }
 
 })

@@ -57,7 +57,7 @@ export default {
 
 .layout {
   display: flex;
-  height: 100vh;
+  height: 900px;
 }
 .sidebar {
 }

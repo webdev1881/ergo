@@ -4,11 +4,8 @@
       <Loader />
     </div>
 
-      <canvas class="canvas" ref="canvas"></canvas> 
-
-    
-
-     
+    <canvas class="canvas" ref="canvas"></canvas> 
+ 
 
   </div>
 </template>
@@ -24,6 +21,7 @@ export default {
     isLoading: true,
     weeksValue: null,
     weeks: [],
+    url: './yug.json',
     num: 6,
     options: {
       responsive: true,
@@ -42,7 +40,7 @@ export default {
           display: 'auto',
           anchor: 'start',
           align : 'top',
-          color: 'white',
+          color: 'black',
           value: {
             callback: function (label, index, labels) {
               
@@ -72,7 +70,7 @@ export default {
           {
             ticks: {
               callback: function (label, index, labels) {
-                console.log( this );
+                // console.log( this );
                 if(index === 3) {
                   return label
                 }
@@ -91,8 +89,7 @@ export default {
   }),
 
   async mounted() {
-    this.weeksValue = await this.$store.dispatch("fetchAll")
-
+    this.weeksValue = await this.$store.dispatch("fetchJson", this.url)
     this.render()
     this.isLoading = false
     this.onInput()
@@ -110,11 +107,10 @@ export default {
       if (this.weeks.length < this.weeksValue.length) {  
         this.weeks.unshift(newData)
         this.$data._chart.data.labels.unshift(newData.week)
-        this.$data._chart.data.datasets[0].data.unshift(newData.clasters['32'])
-        this.$data._chart.data.datasets[1].data.unshift(newData.clasters['40'])
-        this.$data._chart.data.datasets[2].data.unshift(newData.clasters['43'])
-        this.$data._chart.data.datasets[3].data.unshift(newData.clasters['50'])
-        this.$data._chart.data.datasets[4].data.unshift(newData.clasters['60 >'])
+        this.$data._chart.data.datasets[0].data.unshift(newData.clasters['32'].UNITS)
+        this.$data._chart.data.datasets[1].data.unshift(newData.clasters['43'].UNITS)
+        this.$data._chart.data.datasets[2].data.unshift(newData.clasters['50'].UNITS)
+        this.$data._chart.data.datasets[3].data.unshift(newData.clasters['60 >'].UNITS)
 
         this.$data._chart.update()
       }
@@ -123,18 +119,13 @@ export default {
     remove() {
       let firstWeek = this.weeks.length;
       let newData = (this.weeksValue[this.weeksValue.length - firstWeek])
-      // let newData2 = (this.weeksValue[this.weeksValue.length - firstWeek])
       if (this.weeks.length <= this.weeksValue.length && this.weeks.length > 2) {       
         this.weeks.shift(newData)
-        // this.weeks2.shift(newData2)
         this.$data._chart.data.labels.shift(newData.week)
-
         this.$data._chart.data.datasets[0].data.shift(newData.units)
         this.$data._chart.data.datasets[1].data.shift(newData.units)
         this.$data._chart.data.datasets[2].data.shift(newData.units)
         this.$data._chart.data.datasets[3].data.shift(newData.units)
-        this.$data._chart.data.datasets[4].data.shift(newData.units)
-        // this.$data._chart.data.datasets[5].data.shift(newData.units)
 
         this.$data._chart.update()     
       }
@@ -156,37 +147,30 @@ export default {
             {
               label: "32",
               fill: false,
-              backgroundColor: "#7d8fed",
-              borderColor: "#7d8fed",
-              data: this.weeks.map((w,i) => w.clasters['32']  ),
-            },
-            {
-              label: "40",
-              fill: false,
-              backgroundColor: "#677df8",
-              borderColor: "#677df8",
-              data: this.weeks.map((w,i) => w.clasters['40'] ),
+              backgroundColor: "#75B34B",
+              borderColor: "#75B34B",
+              data: this.weeks.map((w,i) => w.clasters['32'].UNITS  ),
             },
             {
               label: "43",
               fill: false,
-              backgroundColor: "#4863f5",
-              borderColor: "#4863f5",
-              data: this.weeks.map((w,i) => w.clasters['43'] ),
+              backgroundColor: "#BAC658",
+              borderColor: "#BAC658",
+              data: this.weeks.map((w,i) => w.clasters['43'].UNITS ),
             },
             {
               label: "50",
               fill: false,
-              backgroundColor: "#2746ed",
-              borderColor: "#2746ed",
-              data: this.weeks.map((w,i) => w.clasters['50'] ),
+              backgroundColor: "#ffc107",
+              borderColor: "#ffc107",
+              data: this.weeks.map((w,i) => w.clasters['50'].UNITS ),
             },
             {
               label: "60 >",
               fill: false,
-              backgroundColor: "#01178d",
-              borderColor: "#01178d",
-              data: this.weeks.map((w,i) => w.clasters['60 >'] ),
+              backgroundColor: "#EC752C",
+              borderColor: "#EC752C",
+              data: this.weeks.map((w,i) => w.clasters['60 >'].UNITS ),
             },
           ]
         }, 
@@ -197,7 +181,7 @@ export default {
   },
   beforeDestroy () {
     this.$data._chart.destroy()
-    console.log( 'Chart destroyed WeekGfkClusters' );
+    console.log( 'Chart destroyed WeekYugClusters' );
   },
 }
 </script>
