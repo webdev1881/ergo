@@ -1,8 +1,12 @@
 <template>
   <div class="week">
+
+    <div class="title">YUG</div>
+
     <div v-if="isLoading" class="load">
       <Loader />
     </div>
+
 
     <canvas class="canvas" ref="canvas"></canvas> 
  
@@ -190,6 +194,12 @@ export default {
 
 .week {
   width: 50%;
+}
+.title {
+  font-size: 1.3em;
+  color: #c11433;
+  display: flex;
+  justify-content: center;
 }
 .control {
   display: flex;

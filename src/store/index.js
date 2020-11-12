@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import brands from '../data/brands'
 
 Vue.use(Vuex)
 
@@ -36,13 +37,13 @@ export default new Vuex.Store({
           if (weeks[w] === res[v]["Week"]) {
             units = units + +res[v]["Sales Units"] //________________total units
             uah = uah + +res[v]["Sales Value UAH"] //________________total uah
-            for (let c in clasters) { // _____________________________clasters
+            for (let c in clasters) { // ____________________________clasters
               if (clasters[c] === res[v].SIZE) {
                 weekClaster[clasters[c]].UNITS = weekClaster[clasters[c]].UNITS + +res[v]["Sales Units"]
                 weekClaster[clasters[c]].UAH = weekClaster[clasters[c]].UAH + +res[v]["Sales Value UAH"]
               }
             }
-            for (let b in brands) { //________________________________ brands
+            for (let b in brands) { //________________________________brands
               if (brands[b] === res[v].BRAND) {
                 weekBrands[brands[b]].UNITS = weekBrands[brands[b]].UNITS + +res[v]["Sales Units"]
                 weekBrands[brands[b]].UAH = weekBrands[brands[b]].UAH + +res[v]["Sales Value UAH"]
@@ -56,7 +57,7 @@ export default new Vuex.Store({
           '50':{"UNITS": 0,"UAH": 0},
           '60 >':{"UNITS": 0,"UAH": 0},
         }
-        for (let g in weekClaster) { // switch
+        for (let g in weekClaster) { //____________________ switch  clasters
           switch (true) {
             case g >= 31.5 && g <= 32:
               weekGroupClaster[32].UNITS += weekClaster[g].UNITS
@@ -80,7 +81,55 @@ export default new Vuex.Store({
       }
       // console.log( weeksValue )
       return weeksValue
+    },
+
+    async fetchBrands({dispatch, commit},[ url, qty]) {
+      const res = await fetch(url).then(res => res.json())
+      // const brands = Array.from(new Set(res.map(({ BRAND }) => BRAND)))
+      let weeks = Array.from(new Set(res.map(({ Week }) => Week)))
+
+      let brandsValue = []
+      let sortedBrandsValue = []
+      let lastWeek = Math.max.apply(null, weeks)
+
+      
+
+      weeks = weeks.filter(w => +w >= lastWeek-qty+1 )
+
+      console.log(weeks);
+
+      for (let b in brands) { // перебор уникальных брендов
+
+        let weekBrands = weeks.reduce((newObj, item) => {
+          newObj[item] = {"UNITS": 0,"UAH": 0, "ASP":0}
+          return newObj
+        }, {})
+
+        for( let v in res ) {
+          if ( brands[b] === res[v].BRAND && weekBrands[res[v].Week] ) {
+            weekBrands[res[v].Week].UNITS = weekBrands[res[v].Week].UNITS + +res[v]["Sales Units"]
+            weekBrands[res[v].Week].UAH = weekBrands[res[v].Week].UAH + +res[v]["Sales Value UAH"]
+            weekBrands[res[v].Week].ASP = weekBrands[res[v].Week].UAH / weekBrands[res[v].Week].UNITS
+          }
+        }
+        brandsValue.push( {brand: brands[b], weeks: weekBrands} )
+      }     
+
+      Object.keys(brandsValue).sort(function(a,b){
+        return brandsValue[b].weeks[lastWeek].ASP - brandsValue[a].weeks[lastWeek].ASP
+      }).map( item => {sortedBrandsValue.push( brandsValue[item] )})    
+
+      // console.log( [sortedBrandsValue, lastWeek] )
+      return [sortedBrandsValue, lastWeek]
     }
+
+
+
+
+
+
+
+
   }
 
 })

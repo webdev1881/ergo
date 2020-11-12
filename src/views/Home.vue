@@ -1,40 +1,50 @@
 <template>
   <div class="home">
-    <div class="weeks">
 
       <div class="total">
         <div class="title">Total</div>
+
         <div class="charts">
           <WeekChartUnits @changeLoading="loadedUnits" />
           <WeekChartUAH @changeLoading="loadedUah" />
         </div>
+
         <div class="arrows" v-show="isLoadedUnits && isLoadedUah">
           <button class="waves-effect waves-light btn-small" @click="addWeeks">
             <i class="material-icons dp48">keyboard_arrow_left</i>
           </button>
-          <button class="waves-effect waves-light btn-small" @click="removeWeeks">
+          <button
+            class="waves-effect waves-light btn-small"
+            @click="removeWeeks"
+          >
             <i class="material-icons dp48">keyboard_arrow_right</i>
           </button>
         </div>
       </div>
 
-      <div class="asp">
-
+      <div class="asps">
+        <div class="title">ASP</div>
+        <div class="asp">
+          <GfkASP @changeLoading="loadedUnits" />
+        </div>
+        <div class="asp">
+          <YugASP @changeLoading="loadedUnits" />
+        </div>
       </div>
 
       
 
-    </div>
 
     <hr />
   </div>
 </template>
 
-
 <script>
 import WeekChartUnits from "@/components/Home/WeekChartUnits";
 import WeekChartUAH from "@/components/Home/WeekChartUAH";
 
+import GfkASP from "@/components/Home/GfkASP";
+import YugASP from "@/components/Home/YugASP";
 
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
@@ -46,7 +56,7 @@ export default {
   }),
 
   async mounted() {
-    Chart.defaults.global.plugins.datalabels.display = false
+    Chart.defaults.global.plugins.datalabels.display = false;
   },
   watch: {},
 
@@ -59,8 +69,8 @@ export default {
     },
 
     addWeeks() {
-      this.$children[0].add()
-      this.$children[1].add()
+      this.$children[0].add();
+      this.$children[1].add();
     },
 
     removeWeeks() {
@@ -72,7 +82,8 @@ export default {
   components: {
     WeekChartUnits,
     WeekChartUAH,
-
+    GfkASP,
+    YugASP,
   },
 };
 </script>
@@ -103,10 +114,13 @@ hr {
   background-image: linear-gradient(left, #f0f0f0, #8c8c8c, #f0f0f0);
 }
 
-.clasters {
-  margin-top: 30px;;
+.asps {
+  display: flex;
+  justify-content: center;
 }
 
-
-
+.asp {
+  width: 50%;
+  padding-top: 30px;
+}
 </style>

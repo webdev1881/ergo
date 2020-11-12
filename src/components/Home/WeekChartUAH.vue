@@ -35,7 +35,7 @@ export default {
       //       return context.dataset.backgroundColor
       //     },
       //     formatter: function(value, context) {
-      //         return (value/1000).toFixed(1)
+      //         return (value/1000000).toFixed(1)
       //     },
       //     display: 'auto',
       //     anchor: 'start',
@@ -68,7 +68,7 @@ export default {
             position: 'right',
             ticks: {
               callback: function (label, index, labels) {
-                return (label / 1000000).toFixed(0) + " k";
+                return (label / 1000000).toFixed(0) + " M";
               },
             },
             scaleLabel: {
@@ -135,7 +135,7 @@ export default {
           labels: this.weeksGfk.map((w) => w.week) || null,
           datasets: [
             {
-              label: "GFK Units",
+              label: "GFK UAH",
               yAxisID: 'y-axis-1',
               fill: false,
               backgroundColor: "rgb(63, 166, 236)",
@@ -143,7 +143,7 @@ export default {
               data: this.weeksGfk.map((w) => w.uah),
             },
             {
-              label: "YUG Units",
+              label: "YUG UAH",
               yAxisID: 'y-axis-2',
               fill: false,
               backgroundColor: "rgb(255, 99, 132)",

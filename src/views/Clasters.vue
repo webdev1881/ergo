@@ -106,7 +106,7 @@ hr {
 }
 
 .clasters {
-  margin-top: 30px;;
+  // margin-top: 30px;;
 }
 
 </style>
