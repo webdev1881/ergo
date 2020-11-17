@@ -1,29 +1,26 @@
 <template>
   <div class="home">
+    <div class="total">
+      <div class="title">Total</div>
 
-      <div class="total">
-        <div class="title">Total</div>
-
-        <div class="charts">
-          <WeekChartUnits @changeLoading="loadedUnits" />
-          <WeekChartUAH @changeLoading="loadedUah" />
-        </div>
-
-        <div class="arrows" v-show="isLoadedUnits && isLoadedUah">
-          <button class="waves-effect waves-light btn-small" @click="addWeeks">
-            <i class="material-icons dp48">keyboard_arrow_left</i>
-          </button>
-          <button
-            class="waves-effect waves-light btn-small"
-            @click="removeWeeks"
-          >
-            <i class="material-icons dp48">keyboard_arrow_right</i>
-          </button>
-        </div>
+      <div class="charts">
+        <WeekChartUnits @changeLoading="loadedUnits" />
+        <WeekChartUAH @changeLoading="loadedUah" />
       </div>
 
-      <div class="asps">
-        <div class="title">ASP</div>
+      <div class="arrows" v-show="isLoadedUnits && isLoadedUah">
+        <button class="waves-effect waves-light btn-small" @click="addWeeks">
+          <i class="material-icons dp48">keyboard_arrow_left</i>
+        </button>
+        <button class="waves-effect waves-light btn-small" @click="removeWeeks">
+          <i class="material-icons dp48">keyboard_arrow_right</i>
+        </button>
+      </div>
+    </div>
+
+    <div class="asps">
+      <div class="title">ASP</div>
+      <div class="charts">
         <div class="asp">
           <GfkASP @changeLoading="loadedUnits" />
         </div>
@@ -31,9 +28,7 @@
           <YugASP @changeLoading="loadedUnits" />
         </div>
       </div>
-
-      
-
+    </div>
 
     <hr />
   </div>
@@ -90,6 +85,7 @@ export default {
 
 
 <style lang="scss" scoped >
+
 .charts {
   width: 100%;
   display: flex;
@@ -98,8 +94,7 @@ export default {
 
 .title {
   font-size: 1.5rem;
-  display: flex;
-  justify-content: center;
+  text-align: center;
 }
 
 .arrows {
@@ -115,12 +110,10 @@ hr {
 }
 
 .asps {
-  display: flex;
-  justify-content: center;
+  padding-top: 30px;
 }
 
 .asp {
   width: 50%;
-  padding-top: 30px;
 }
 </style>

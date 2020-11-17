@@ -91,12 +91,10 @@ export default new Vuex.Store({
       let brandsValue = []
       let sortedBrandsValue = []
       let lastWeek = Math.max.apply(null, weeks)
-
-      
+     
 
       weeks = weeks.filter(w => +w >= lastWeek-qty+1 )
 
-      console.log(weeks);
 
       for (let b in brands) { // перебор уникальных брендов
 
@@ -121,7 +119,95 @@ export default new Vuex.Store({
 
       // console.log( [sortedBrandsValue, lastWeek] )
       return [sortedBrandsValue, lastWeek]
+    },
+
+
+
+
+
+    async fetchBrandsClusters({dispatch, commit},[ url, qty]) {
+      const res = await fetch(url).then(res => res.json())
+      let weeks = Array.from(new Set(res.map(({ Week }) => Week)))
+      const clasters = Array.from(new Set(res.map(({ SIZE }) => SIZE)))
+
+      let lastWeek = Math.max.apply(null, weeks)
+      weeks = weeks.filter(w => +w >= lastWeek-qty+1 )
+
+      let brandsValue = []
+
+      // console.log(weeks);
+
+
+      for( let b in brands ) {
+
+        let weekBrands = weeks.reduce((newObj, item) => {
+          newObj[item] = {}
+          return newObj
+        }, {})
+
+        // console.log(weekBrands);
+
+        let weekClaster = clasters.reduce((newObj, item) => {
+              newObj[item] = {"UNITS": 0,"UAH": 0}
+              return newObj
+            }, {})
+
+        // console.log(weekClaster);
+
+        let weekGroupClaster = {
+            '32':{"UNITS": 0,"UAH": 0},
+            '43':{"UNITS": 0,"UAH": 0},
+            '50':{"UNITS": 0,"UAH": 0},
+            '60 >':{"UNITS": 0,"UAH": 0},
+        }
+
+        
+
+        for( let v in res ) {
+          if ( brands[b] === res[v].BRAND) {
+
+            // console.log( weekBrands[res[v].Week] )
+
+
+              switch (true) {
+                case res[v].SIZE >= 31.5 && res[v].SIZE <= 32:
+                  weekGroupClaster[32].UNITS += res[v].UNITS
+                  weekGroupClaster[32].UAH += res[v].UAH
+                  break;
+                case res[v].SIZE >= 33 && res[v].SIZE <= 45:
+                  weekGroupClaster[43].UNITS += res[v].UNITS
+                  weekGroupClaster[43].UAH += res[v].UAH
+                  break;
+                case res[v].SIZE >= 46 && res[v].SIZE <= 55:
+                  weekGroupClaster[50].UNITS += res[v].UNITS
+                  weekGroupClaster[50].UAH += res[v].UAH
+                  break;
+                case res[v].SIZE >= 56:
+                  weekGroupClaster['60 >'].UNITS += res[v].UNITS
+                  weekGroupClaster['60 >'].UAH += res[v].UAH
+                  break;
+              }
+
+        }
+
+        console.log( weekGroupClaster )
+
+          break
+
+      }
+
+
+
+        
+
+
     }
+
+
+
+
+
+    },
 
 
 

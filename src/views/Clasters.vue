@@ -20,6 +20,18 @@
       </div>
     </div>
 
+    <div class="brands">
+      <div class="title">Brands</div>
+      <div class="charts">
+        <div class="brand">
+          <BrandGfkClusters @changeLoading="loadedClasters" />
+        </div>
+        <div class="brand">
+          <!-- <BrandGfkClusters @changeLoading="loadedClasters" /> -->
+        </div>
+      </div>
+    </div>
+
 
 
   </div>
@@ -28,6 +40,8 @@
 <script>
 import WeekGfkClusters from "@/components/Clasters/WeekGfkClusters";
 import WeekYugClusters from "@/components/Clasters/WeekYugClusters";
+
+import BrandGfkClusters from "@/components/Clasters/BrandGfkClusters";
 
 export default {
   name: "clasters",
@@ -63,6 +77,7 @@ export default {
   components: {
     WeekGfkClusters,
     WeekYugClusters,
+    BrandGfkClusters,
   },
 }
 </script>
@@ -105,8 +120,13 @@ hr {
   background-image: linear-gradient(left, #f0f0f0, #8c8c8c, #f0f0f0);
 }
 
-.clasters {
-  // margin-top: 30px;;
+.brands {
+  width: 100%;
+
+}
+
+.brand {
+  width: 50%;
 }
 
 </style>
