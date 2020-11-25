@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+
 
     <div class="layout">
 
@@ -37,7 +34,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~materialize-css/dist/css/materialize.min.css";
+// @import "~materialize-css/dist/css/materialize.min.css";
 
 * {
   font-size: 14px;

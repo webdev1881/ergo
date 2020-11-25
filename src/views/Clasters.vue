@@ -122,7 +122,7 @@ hr {
 
 .brands {
   width: 100%;
-
+  padding-top: 50px;
 }
 
 .brand {

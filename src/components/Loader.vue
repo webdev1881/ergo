@@ -22,6 +22,7 @@ export default {};
 
 
 <style lang="scss" scoped>
+// @import "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css";
 .layer {
   margin-top: 100px;;
   background-color: #fff;
