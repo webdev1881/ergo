@@ -1,7 +1,7 @@
 <template>
   <div class="week">
 
-    <div class="title">YUG</div>
+    <div class="title" v-show="!isLoading">YUG</div>
 
     <div v-if="isLoading" class="load">
       <Loader />

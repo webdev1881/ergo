@@ -5,7 +5,7 @@
    <Loader />
   </div>
 
-  <div class="title" v-show="!isLoading">GFK</div>
+  <div class="title" v-show="!isLoading">YUG</div>
 
   <div>
    <canvas class="canvas" ref="canvas"></canvas>
@@ -23,13 +23,13 @@ import { Line } from "vue-chartjs";
 
 
 export default {
- name: "BrandsChartUnits",
+ name: "BrandYugClusters",
  extends: Line,
  props: ['brand'],
  data: () => ({
   isLoading: true,
   brandValueGfk: null,
-  urlGfk: "./gfk.json",
+  urlGfk: "./yug.json",
   weeks: [],
   num: 6,
   lastWeek: 0,
@@ -62,7 +62,7 @@ export default {
           color: 'black',
           value: {
             callback: function (label, index, labels) {
-              return (value).toFixed(1);
+              return (value / 100).toFixed(1);
             }
           },
         }
@@ -73,13 +73,14 @@ export default {
           {
             ticks: {
               backdropColor: 'black',
-              // callback: function (label, index, labels) {               
-              //   return (label / 100).toFixed(0) + "k";
-              // },
+            //   callback: function (label, index, labels) {
+                
+            //     return (label / 100).toFixed(0) + "k";
+            //   },
             },
             scaleLabel: {
               display: true,
-              // labelString: "1k = 100",
+            //   labelString: "1k = 100",
             },
           },
         ],
@@ -219,7 +220,7 @@ export default {
 }
 .title {
   font-size: 1.3em;
-  color: #0d34c5;
+  color: #c11433;
   display: flex;
   justify-content: center;
 }

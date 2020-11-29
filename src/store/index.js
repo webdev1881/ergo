@@ -130,7 +130,7 @@ export default new Vuex.Store({
 
 
 
-    async fetchBrandGfkClusters({dispatch, commit}, url) {
+    async fetchBrandClusters({dispatch, commit}, url) {
       const res = await fetch(url).then(res => res.json())
       const brands = Array.from(new Set(res.map(({ BRAND }) => BRAND)))
       let weeks = Array.from(new Set(res.map(({ Week }) => Week)))

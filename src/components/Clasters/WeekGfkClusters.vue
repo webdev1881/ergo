@@ -1,7 +1,7 @@
 <template>
   <div class="week">
 
-    <div class="title">GFK</div>
+    <div class="title" v-show="!isLoading">GFK</div>
 
     <div v-if="isLoading" class="load">
       <Loader />
@@ -95,6 +95,7 @@ export default {
     this.render()
     this.isLoading = false
     this.onInput()
+    // console.log( this.weeksValue )
   },
 
   methods: {
@@ -104,7 +105,9 @@ export default {
 
     add() {
       let firstWeek = this.weeks.length;
+      // console.log(firstWeek);
       let newData = (this.weeksValue[this.weeksValue.length - 1 - firstWeek])
+      // console.log(newData);
       if (this.weeks.length < this.weeksValue.length) {  
         this.weeks.unshift(newData)
         this.$data._chart.data.labels.unshift(newData.week)
