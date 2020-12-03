@@ -12,12 +12,12 @@ import perFilter from './filters/persent.filter'
 
 Vue.config.productionTip = false
 
-Vue.component('Loader', Loader);
+Vue.component('Loader', Loader)
 
-Vue.filter('num', numFilter);
-Vue.filter('per', perFilter);
+Vue.filter('num', numFilter)
+Vue.filter('per', perFilter)
 
-// console.log(axios);
+// console.log(axios)
 
 new Vue({
   router,

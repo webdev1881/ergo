@@ -1,17 +1,17 @@
 <template>
  <div class="clusters_brands" >
-  <div v-if="isLoading" class="load">
+  <!-- <div v-if="isLoading" class="load">
    <Loader />
-  </div>
+  </div> -->
   
 
   <div class="clasters">
-   <div class="title" v-show="isLoadedClasters">Clusters</div>
+   <div class="title">Clusters</div>
    <div class="charts">
-    <WeekGfkClusters @changeLoading="loadedClasters" />
-    <WeekYugClusters @changeLoading="loadedClasters" />
+    <WeekGfkClusters @changeLoadingGfk="loadedClastersGfk" />
+    <WeekYugClusters @changeLoadingYug="loadedClastersYug" />
    </div>
-   <div class="arrows" v-show="isLoadedClasters">
+   <div class="arrows" v-show="isLoadedClastersGfk && isLoadedClastersYug">
     <button class="waves-effect waves-light btn-small" @click="addWeeksClaster">
      <i class="material-icons dp48">keyboard_arrow_left</i>
     </button>
@@ -21,30 +21,43 @@
    </div>
   </div>
 
-  <div class="brands">
-   <div class="title" v-show="isloadedBrand">Brands</div>
 
-  <!-- _________________________________________________________________SELECT -->
-   <div class="select" > 
-    <select class="wrap" ref="select" v-model="brand" >
-     <option v-for="b in brands" :key="b" :value="b">{{ b }}</option>
-    </select>
-    <label>Materialize Select</label>
-   </div>
+  <ul ref="collapsible" class="collapsible">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">filter_drama</i>Brands</div>
+      <div class="collapsible-body">
+          <div class="brands" v-show="isloadedBrand">
+            <div class="title">Brands</div>
 
-   <div class="charts">
-    <BrandGfkClusters :brand="brand" @changeLoadingBrand="loadedBrand" />
-    <BrandYugClusters :brand="brand" @changeLoadingBrand="loadedBrand" />
-   </div>
-   <div class="arrows" v-show="isloadedBrand">
-    <button class="waves-effect waves-light btn-small" @click="addWeeksClasterBrand">
-     <i class="material-icons dp48">keyboard_arrow_left</i>
-    </button>
-    <button class="waves-effect waves-light btn-small" @click="removeWeeksClasterBrand">
-     <i class="material-icons dp48">keyboard_arrow_right</i>
-    </button>
-   </div>
-  </div>
+            <div class="select" > 
+                <select class="wrap" ref="select" v-model="brand" >
+                <option v-for="b in brands" :key="b" :value="b">{{ b }}</option>
+                </select>
+                <label>Materialize Select</label>
+            </div>
+
+            <div class="charts">
+                <BrandGfkClusters :brand="brand" @changeLoadingBrand="loadedBrand" />
+                <BrandYugClusters :brand="brand" @changeLoadingBrand="loadedBrand" />
+            </div>
+            <div class="arrows" v-show="isloadedBrand">
+                <button class="waves-effect waves-light btn-small" @click="addWeeksClasterBrand">
+                <i class="material-icons dp48">keyboard_arrow_left</i>
+                </button>
+                <button class="waves-effect waves-light btn-small" @click="removeWeeksClasterBrand">
+                <i class="material-icons dp48">keyboard_arrow_right</i>
+                </button>
+            </div>
+            </div>
+      </div>
+    </li>
+  </ul>
+
+
+
+
+  
+  
  </div>
 </template>
 
@@ -60,8 +73,9 @@ import brands from "../data/brands";
 export default {
  name: "clasters",
  data: () => ({
-  isLoading: true,
-  isLoadedClasters: false,
+//   isLoading: true,
+  isLoadedClastersGfk: false,
+  isLoadedClastersYug: false,
   isloadedBrand: false,
   brands: [],
   brand: "ERGO",
@@ -73,16 +87,21 @@ export default {
   Chart.defaults.global.plugins.datalabels.display = false
 
   setTimeout(() => this.select = M.FormSelect.init(this.$refs.select))
+  setTimeout(() => this.select = M.Collapsible.init(this.$refs.collapsible))
 
-  this.isLoading = false;
+//   this.isLoading = false;
 
  },
 
 
  methods: {
-  loadedClasters(value) {
-   this.isLoadedClasters = true;
+  loadedClastersGfk(value) {
+   this.isLoadedClastersGfk = true;
   },
+  loadedClastersYug(value) {
+   this.isLoadedClastersYug = true;
+  },
+
   loadedBrand(value) {
    this.isloadedBrand = true;
   },

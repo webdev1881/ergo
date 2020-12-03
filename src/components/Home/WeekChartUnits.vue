@@ -43,26 +43,26 @@ export default {
         ]
       },
 
-      // plugins: {
-      //   datalabels: {
-      //     id: 'y-axis-1',
-      //     backgroundColor: function(context) {
-      //       return context.dataset.backgroundColor
-      //     },
-      //     formatter: function(value, context) {
-      //         return (value/1000).toFixed(1)
-      //     },
-      //     display: 'auto',
-      //     anchor: 'start',
-      //     align : 'top',
-      //     color: 'white',
-      //     value: {
-      //       callback: function (label, index, labels) {
-      //         return (value / 1000).toFixed(1) + "k";
-      //       }
-      //     },
-      //   }
-      // },
+      plugins: {
+        datalabels: {
+          id: 'y-axis-1',
+          backgroundColor: function(context) {
+            return context.dataset.backgroundColor
+          },
+          formatter: function(value, context) {
+              return (value/1000).toFixed(1)
+          },
+          display: 'auto',
+          anchor: 'start',
+          align : 'top',
+          color: 'white',
+          value: {
+            callback: function (label, index, labels) {
+              return (value / 1000).toFixed(1) + "k";
+            }
+          },
+        }
+      },
 
       scales: {
         xAxes: [

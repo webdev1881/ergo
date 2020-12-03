@@ -7,8 +7,11 @@
       <Loader />
     </div>
    
+    <div class="wr" v-show="!isLoading">
+      <label class="check" ><input type="checkbox" checked="checked" @click.prevent="checkToggle" /><span>show / hide</span></label>
+      <canvas class="canvas" ref="canvas"> </canvas> 
+    </div>    
     
-    <canvas class="canvas" ref="canvas"></canvas> 
  
 
   </div>
@@ -29,6 +32,7 @@ export default {
     num: 6,
     options: {
       responsive: true,
+      // maintainAspectRatio: false,
 
       plugins: {
         datalabels: {
@@ -95,12 +99,17 @@ export default {
     this.render()
     this.isLoading = false
     this.onInput()
-    // console.log( this.weeksValue )
+    console.log( this.$data._chart.data.datasets )
   },
 
   methods: {
     onInput(){
-      this.$emit('changeLoading', this.isLoading)
+      this.$emit('changeLoadingGfk', this.isLoading)
+    },
+
+    checkToggle(){
+      this.$data._chart.data.datasets.forEach( ds => ds.hidden = !ds.hidden )
+      this.$data._chart.update()
     },
 
     add() {
@@ -207,6 +216,10 @@ export default {
   i {
     font-size: 1.4rem !important;
   }
+}
+
+.check {
+  margin-left: 50px;
 }
 
 </style>

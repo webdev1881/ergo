@@ -18,17 +18,32 @@
       </div>
     </div>
 
-    <div class="asps">
-      <div class="title">ASP</div>
-      <div class="charts">
-        <div class="asp">
-          <GfkASP @changeLoading="loadedUnits" />
+
+    <ul ref="collapsible" class="collapsible">
+      <li>
+        <div class="collapsible-header"><i class="material-icons">filter_drama</i>ASP</div>
+        <div class="collapsible-body">
+
+          <div class="asps">
+            <div class="title">ASP</div>
+            <div class="charts">
+              <div class="asp">
+                <GfkASP @changeLoading="loadedUnits" />
+              </div>
+              <div class="asp">
+                <YugASP @changeLoading="loadedUnits" />
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div class="asp">
-          <YugASP @changeLoading="loadedUnits" />
-        </div>
-      </div>
-    </div>
+      </li>
+    </ul>
+
+
+
+
+    
 
     <hr />
   </div>
@@ -51,7 +66,8 @@ export default {
   }),
 
   async mounted() {
-    Chart.defaults.global.plugins.datalabels.display = false;
+    Chart.defaults.global.plugins.datalabels.display = false
+    setTimeout(() => this.select = M.Collapsible.init(this.$refs.collapsible))
   },
   watch: {},
 

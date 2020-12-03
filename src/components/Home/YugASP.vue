@@ -104,46 +104,18 @@ export default {
       this.$emit('changeLoading', this.isLoading);
     },
 
-    // add() {
-    //   let firstWeek = this.brandsGfk.length;
-    //   let newDataGfk = (this.brandsValueGfk[this.brandsValueGfk.length - 1 - firstWeek])
-    //   let newDataYug = (this.weeksValueYug[this.weeksValueYug.length - 1 - firstWeek])
-    //   if (this.brandsGfk.length < this.brandsValueGfk.length) {  
-    //     this.brandsGfk.unshift(newDataGfk)
-    //     this.weeksYug.unshift(newDataYug)
-    //     this.$data._chart.data.labels.unshift(newDataGfk.week)
-    //     this.$data._chart.data.datasets[0].data.unshift(newDataGfk.uah)
-    //     this.$data._chart.data.datasets[1].data.unshift(newDataYug.uah)
-    //     this.$data._chart.update()     
-    //   }
-    // },
-
-    // remove() {
-    //   let firstWeek = this.brandsGfk.length;
-    //   let newDataGfk = (this.brandsValueGfk[this.brandsValueGfk.length - firstWeek])
-    //   let newDataYug = (this.brandsValueGfk[this.brandsValueGfk.length - firstWeek])
-    //   if (this.brandsGfk.length <= this.brandsValueGfk.length && this.brandsGfk.length > 2) {       
-    //     this.brandsGfk.shift(newDataGfk)
-    //     this.weeksYug.shift(newDataYug)
-    //     this.$data._chart.data.labels.shift(newDataGfk.week)
-    //     this.$data._chart.data.datasets[0].data.shift(newDataGfk.uah)
-    //     this.$data._chart.data.datasets[1].data.shift(newDataYug.uah)
-    //     this.$data._chart.update()     
-    //   }
-    // },
-
     render() {
       this.renderChart(
         {
           labels: this.brandsValueGfk.map((w) => w.brand) || null,
           datasets: [
             {
-              label: `W  ${this.lastWeek}`,
+              label: `W  ${this.lastWeek-2}`,
               AxisID: 'y-axis-1',
               fill: false,
               backgroundColor: this.color,
               borderColor: this.color,
-              data: this.brandsValueGfk.map((w,i) => w.weeks[this.lastWeek].ASP),
+              data: this.brandsValueGfk.map((w,i) => w.weeks[this.lastWeek-2].ASP),
             },
             {
               label:  `W  ${this.lastWeek-1}`,
@@ -154,12 +126,12 @@ export default {
               data: this.brandsValueGfk.map((w,i) => w.weeks[this.lastWeek-1].ASP),
             },
             {
-              label:  `W  ${this.lastWeek-2}`,
+              label:  `W  ${this.lastWeek}`,
               yAxisID: 'y-axis-1',
               fill: false,
               backgroundColor: this.color,
               borderColor: this.color,
-              data: this.brandsValueGfk.map((w,i) => w.weeks[this.lastWeek-2].ASP),
+              data: this.brandsValueGfk.map((w,i) => w.weeks[this.lastWeek].ASP),
             },
           ],
         }, 
