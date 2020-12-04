@@ -3,6 +3,12 @@
   <!-- <div v-if="isLoading" class="load">
    <Loader />
   </div> -->
+
+  <!-- <WeekGfkClusters @changeLoadingGfk="loadedClastersGfk" />
+  <WeekYugClusters  v-show="isLoadedClastersGfk" @changeLoadingYug="loadedClastersYug" />
+
+  <BrandGfkClusters  v-show="isLoadedClastersYug"  :brand="brand" @changeLoadingBrand="loadedBrand" />
+  <BrandYugClusters  v-show="isloadedBrand"  :brand="brand" @changeLoadingBrand="loadedBrand" /> -->
   
 
   <div class="clasters">
@@ -26,7 +32,7 @@
     <li>
       <div class="collapsible-header"><i class="material-icons">filter_drama</i>Brands</div>
       <div class="collapsible-body">
-          <div class="brands" v-show="isloadedBrand">
+          <div class="brands" v-show="isLoadedClastersGfk">
             <div class="title">Brands</div>
 
             <div class="select" > 
@@ -73,7 +79,6 @@ import brands from "../data/brands";
 export default {
  name: "clasters",
  data: () => ({
-//   isLoading: true,
   isLoadedClastersGfk: false,
   isLoadedClastersYug: false,
   isloadedBrand: false,
@@ -89,20 +94,18 @@ export default {
   setTimeout(() => this.select = M.FormSelect.init(this.$refs.select))
   setTimeout(() => this.select = M.Collapsible.init(this.$refs.collapsible))
 
-//   this.isLoading = false;
-
  },
 
 
  methods: {
-  loadedClastersGfk(value) {
+  loadedClastersGfk() {
    this.isLoadedClastersGfk = true;
   },
-  loadedClastersYug(value) {
+  loadedClastersYug() {
    this.isLoadedClastersYug = true;
   },
 
-  loadedBrand(value) {
+  loadedBrand() {
    this.isloadedBrand = true;
   },
 
@@ -178,7 +181,7 @@ hr {
 
 .brands {
  width: 100%;
- padding-top: 50px;
+//  padding-top: 50px;
 }
 
 .brand {

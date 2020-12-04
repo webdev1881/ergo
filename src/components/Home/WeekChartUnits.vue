@@ -85,7 +85,7 @@ export default {
             id: "y-axis-1",
             ticks: {
               callback: function (label, index, labels) {
-                return (label / 1000).toFixed(1) + "k";
+                return (label / 1000).toFixed(0) + "k";
               },
             },
             scaleLabel: {

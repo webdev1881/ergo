@@ -7,8 +7,9 @@
 
   <div class="title" v-show="!isLoading">YUG</div>
 
-  <div>
-   <canvas class="canvas" ref="canvas"></canvas>
+  <div class="wr">
+    <label v-show="!isLoading" class="check" ><input type="checkbox" checked="checked" @click.prevent="checkToggle" /><span>show / hide</span></label>
+    <canvas class="canvas" ref="canvas"> </canvas> 
   </div>
 
  </div>
@@ -53,17 +54,17 @@ export default {
           backgroundColor: function(context) {                 
             return context.dataset.backgroundColor
           },
-        //   formatter: function(value, context) {
-        //     return (value/100).toFixed(1)
-        //   },
+          // formatter: function(value, context) {
+          //   return (value/1000).toFixed(1)
+          // },
           display: 'auto',
           anchor: 'start',
-          align : 'top',
+          align : 'left',
           color: 'black',
           value: {
-            callback: function (label, index, labels) {
-              return (value / 100).toFixed(1);
-            }
+            // callback: function (label, index, labels) {
+            //   return (value / 1000).toFixed(1);
+            // }
           },
         }
       },
@@ -73,15 +74,14 @@ export default {
           {
             ticks: {
               backdropColor: 'black',
-            //   callback: function (label, index, labels) {
-                
-            //     return (label / 100).toFixed(0) + "k";
-            //   },
+              // callback: function (label, index, labels) {   
+              //   return (label / 100).toFixed(0) + "k";
+              // },
             },
-            scaleLabel: {
-              display: true,
-            //   labelString: "1k = 100",
-            },
+            // scaleLabel: {
+            //   display: true,
+            //   labelString: "1k = 1000",
+            // },
           },
         ],
         xAxes: [
@@ -124,6 +124,11 @@ export default {
  methods: {
   onInput() {
    this.$emit("changeLoadingBrand", this.isLoading)
+  },
+
+  checkToggle(){
+    this.$data._chart.data.datasets.forEach( ds => ds.hidden = !ds.hidden )
+    this.$data._chart.update()
   },
 
   getBrandData() {
@@ -229,5 +234,9 @@ export default {
  i {
   font-size: 1.4rem !important;
  }
+}
+
+.check {
+  margin-left: 50px;
 }
 </style>

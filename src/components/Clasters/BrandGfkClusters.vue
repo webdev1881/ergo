@@ -7,8 +7,9 @@
 
   <div class="title" v-show="!isLoading">GFK</div>
 
-  <div>
-   <canvas class="canvas" ref="canvas"></canvas>
+  <div class="wr">
+    <label v-show="!isLoading" class="check" ><input type="checkbox" checked="checked" @click.prevent="checkToggle" /><span>show / hide</span></label>
+    <canvas class="canvas" ref="canvas"> </canvas> 
   </div>
 
  </div>
@@ -58,7 +59,7 @@ export default {
         //   },
           display: 'auto',
           anchor: 'start',
-          align : 'top',
+          align : 'left',
           color: 'black',
           value: {
             callback: function (label, index, labels) {
@@ -123,6 +124,11 @@ export default {
  methods: {
   onInput() {
    this.$emit("changeLoadingBrand", this.isLoading)
+  },
+
+  checkToggle(){
+    this.$data._chart.data.datasets.forEach( ds => ds.hidden = !ds.hidden )
+    this.$data._chart.update()
   },
 
   getBrandData() {
@@ -228,5 +234,9 @@ export default {
  i {
   font-size: 1.4rem !important;
  }
+}
+
+.check {
+  margin-left: 50px;
 }
 </style>

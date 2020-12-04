@@ -7,8 +7,8 @@
       <Loader />
     </div>
    
-    <div class="wr" v-show="!isLoading">
-      <label class="check" ><input type="checkbox" checked="checked" @click.prevent="checkToggle" /><span>show / hide</span></label>
+    <div class="wr">
+      <label v-show="!isLoading" class="check" ><input type="checkbox" checked="checked" @click.prevent="checkToggle" /><span>show / hide</span></label>
       <canvas class="canvas" ref="canvas"> </canvas> 
     </div>    
     
