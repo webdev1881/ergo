@@ -97,9 +97,7 @@ export default new Vuex.Store({
       let sortedBrandsValue = []
       let lastWeek = Math.max.apply(null, weeks)
      
-
       weeks = weeks.filter(w => +w >= lastWeek-qty+1 )
-
 
       for (let b in brands) { // перебор уникальных брендов
 
@@ -122,7 +120,7 @@ export default new Vuex.Store({
         return brandsValue[b].weeks[lastWeek].ASP - brandsValue[a].weeks[lastWeek].ASP
       }).map( item => {sortedBrandsValue.push( brandsValue[item] )})    
 
-      // console.log( [sortedBrandsValue, lastWeek] )
+      console.log( [sortedBrandsValue, lastWeek] )
       return [sortedBrandsValue, lastWeek]
     },
 
@@ -141,14 +139,16 @@ export default new Vuex.Store({
 
       for (let b in brands) {
         let weeksValue = []
-        for (let w in weeks) { // перебор уникальных недель
+
+        for (let w in weeks) { // перебор уникальных недель    
 
           let weekClaster = clasters.reduce((newObj, item) => {
             newObj[item] = {"UNITS": 0,"UAH": 0}
             return newObj
           }, {})
 
-          for (let v in res) {         
+          for (let v in res) {
+
             if (brands[b] === res[v].BRAND && weeks[w] === res[v]["Week"]) {
 
               for (let c in clasters) { // ____________________________clasters
@@ -189,7 +189,7 @@ export default new Vuex.Store({
           weeksValue.push( {week: weeks[w], clasters: weekGroupClaster} )
         }
 
-        brandsValue.push( { "brand": brands[b],"weeks":weeksValue } )
+        brandsValue.push( { "brand": brands[b],"weeks":weeksValue} )
       }
       
       // console.log(brandsValue);

@@ -24,7 +24,7 @@ import { Line } from "vue-chartjs";
 
 
 export default {
- name: "BrandsChartUnits",
+ name: "BrandGfkClusters",
  extends: Line,
  props: ['brand'],
  data: () => ({

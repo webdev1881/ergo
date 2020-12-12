@@ -1,67 +1,55 @@
 <template>
+
+
  <div class="clusters_brands" >
-  <!-- <div v-if="isLoading" class="load">
+
+  <div v-if="!isloadedBrandGfk" class="load">
    <Loader />
-  </div> -->
-
-  <!-- <WeekGfkClusters @changeLoadingGfk="loadedClastersGfk" />
-  <WeekYugClusters  v-show="isLoadedClastersGfk" @changeLoadingYug="loadedClastersYug" />
-
-  <BrandGfkClusters  v-show="isLoadedClastersYug"  :brand="brand" @changeLoadingBrand="loadedBrand" />
-  <BrandYugClusters  v-show="isloadedBrand"  :brand="brand" @changeLoadingBrand="loadedBrand" /> -->
-  
-
-  <div class="clasters">
-   <div class="title">Clusters</div>
-   <div class="charts">
-    <WeekGfkClusters @changeLoadingGfk="loadedClastersGfk" />
-    <WeekYugClusters @changeLoadingYug="loadedClastersYug" />
-   </div>
-   <div class="arrows" v-show="isLoadedClastersGfk && isLoadedClastersYug">
-    <button class="waves-effect waves-light btn-small" @click="addWeeksClaster">
-     <i class="material-icons dp48">keyboard_arrow_left</i>
-    </button>
-    <button class="waves-effect waves-light btn-small" @click="removeWeeksClaster">
-     <i class="material-icons dp48">keyboard_arrow_right</i>
-    </button>
-   </div>
   </div>
 
+  <div v-show="isloadedBrandGfk && isLoadedClastersGfk && isLoadedClastersYug && isloadedBrandYug" class="wrapper">
 
-  <ul ref="collapsible" class="collapsible">
-    <li>
-      <div class="collapsible-header"><i class="material-icons">filter_drama</i>Brands</div>
-      <div class="collapsible-body">
-          <div class="brands" v-show="isLoadedClastersGfk">
-            <div class="title">Brands</div>
+    <div class="clasters">
+        <div class="title">Clusters</div>
+        <div class="charts">
+            <WeekGfkClusters @changeLoadingGfk="loadedClastersGfk" />
+            <WeekYugClusters @changeLoadingYug="loadedClastersYug" />
+        </div>
+        <div class="arrows">
+            <button class="waves-effect waves-light btn-small" @click="addWeeksClaster">
+            <i class="material-icons dp48">keyboard_arrow_left</i>
+            </button>
+            <button class="waves-effect waves-light btn-small" @click="removeWeeksClaster">
+            <i class="material-icons dp48">keyboard_arrow_right</i>
+            </button>
+        </div>
+    </div>
 
-            <div class="select" > 
-                <select class="wrap" ref="select" v-model="brand" >
-                <option v-for="b in brands" :key="b" :value="b">{{ b }}</option>
-                </select>
-                <label>Materialize Select</label>
-            </div>
+    <div class="brands" v-show="isLoadedClastersGfk">
+        <div class="title">Brands</div>
+        
+        <div class="select" > 
+            <select class="wrap" ref="select" v-model="brand" >
+            <option v-for="b in brands" :key="b" :value="b">{{ b }}</option>
+            </select>
+            <label>Materialize Select</label>
+        </div>
 
-            <div class="charts">
-                <BrandGfkClusters :brand="brand" @changeLoadingBrand="loadedBrand" />
-                <BrandYugClusters :brand="brand" @changeLoadingBrand="loadedBrand" />
-            </div>
-            <div class="arrows" v-show="isloadedBrand">
-                <button class="waves-effect waves-light btn-small" @click="addWeeksClasterBrand">
-                <i class="material-icons dp48">keyboard_arrow_left</i>
-                </button>
-                <button class="waves-effect waves-light btn-small" @click="removeWeeksClasterBrand">
-                <i class="material-icons dp48">keyboard_arrow_right</i>
-                </button>
-            </div>
-            </div>
-      </div>
-    </li>
-  </ul>
+        <div class="charts">
+            <BrandGfkClusters :brand="brand" @changeLoadingBrand="loadedBrandGfk" />
+            <BrandYugClusters :brand="brand" @changeLoadingBrand="loadedBrandYug" />
+        </div>
+        <div class="arrows">
+            <button class="waves-effect waves-light btn-small" @click="addWeeksClasterBrand">
+            <i class="material-icons dp48">keyboard_arrow_left</i>
+            </button>
+            <button class="waves-effect waves-light btn-small" @click="removeWeeksClasterBrand">
+            <i class="material-icons dp48">keyboard_arrow_right</i>
+            </button>
+        </div>
+    </div>
 
-
-
-
+  </div>
   
   
  </div>
@@ -81,7 +69,8 @@ export default {
  data: () => ({
   isLoadedClastersGfk: false,
   isLoadedClastersYug: false,
-  isloadedBrand: false,
+  isloadedBrandGfk: false,
+  isloadedBrandYug: false,
   brands: [],
   brand: "ERGO",
  }),
@@ -105,8 +94,11 @@ export default {
    this.isLoadedClastersYug = true;
   },
 
-  loadedBrand() {
-   this.isloadedBrand = true;
+  loadedBrandGfk() {
+   this.isloadedBrandGfk = true;
+  },
+  loadedBrandYug() {
+   this.isloadedBrandYug = true;
   },
 
   addWeeksClaster() {
@@ -165,6 +157,7 @@ export default {
  font-size: 1.5rem;
  display: flex;
  justify-content: center;
+ background-color: #dbdce2;
 }
 
 .arrows {
@@ -181,20 +174,17 @@ hr {
 
 .brands {
  width: 100%;
-//  padding-top: 50px;
+ padding-top: 50px;
 }
 
 .brand {
  width: 50%;
 }
 
-.select {
-    display: flex;
-    justify-content: center;
-}
 
-.select-wrapper {
+.select {
     width: 370px;
+    margin: 0 auto;
 }
 
 
