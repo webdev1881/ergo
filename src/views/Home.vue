@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+
     <div class="total">
       <div class="title">Total</div>
 
@@ -9,14 +10,27 @@
       </div>
 
       <div class="arrows" v-show="isLoadedUnits && isLoadedUah">
-        <button class="waves-effect waves-light btn-small" @click="addWeeks">
-          <i class="material-icons dp48">keyboard_arrow_left</i>
-        </button>
-        <button class="waves-effect waves-light btn-small" @click="removeWeeks">
-          <i class="material-icons dp48">keyboard_arrow_right</i>
-        </button>
+        <button class="waves-effect waves-light btn-small" @click="addWeeks"><i class="material-icons dp48">keyboard_arrow_left</i></button>
+        <button class="waves-effect waves-light btn-small" @click="removeWeeks"><i class="material-icons dp48">keyboard_arrow_right</i></button>
       </div>
+
     </div>
+
+    <div class="percent">
+      <div class="title">Доля YUG / GFK, % </div>
+
+      <div class="charts">
+        <WeekChartPercent @changeLoading="loadedUah" />
+      </div>
+
+      <div class="arrows" v-show="isLoadedUnits && isLoadedUah">
+        <!-- <button class="waves-effect waves-light btn-small" @click="addWeeks"><i class="material-icons dp48">keyboard_arrow_left</i></button>
+        <button class="waves-effect waves-light btn-small" @click="removeWeeks"><i class="material-icons dp48">keyboard_arrow_right</i></button> -->
+      </div>
+      
+    </div>
+
+
 
 
     <ul ref="collapsible" class="collapsible">
@@ -41,8 +55,6 @@
     </ul>
 
 
-
-
     
 
     <hr />
@@ -52,6 +64,8 @@
 <script>
 import WeekChartUnits from "@/components/Home/WeekChartUnits";
 import WeekChartUAH from "@/components/Home/WeekChartUAH";
+
+import WeekChartPercent from "@/components/Home/WeekChartPercent";
 
 import GfkASP from "@/components/Home/GfkASP";
 import YugASP from "@/components/Home/YugASP";
@@ -82,17 +96,21 @@ export default {
     addWeeks() {
       this.$children[0].add();
       this.$children[1].add();
+      this.$children[2].add();
+      
     },
 
     removeWeeks() {
       this.$children[0].remove();
       this.$children[1].remove();
+      this.$children[2].remove();
     },
   },
 
   components: {
     WeekChartUnits,
     WeekChartUAH,
+    WeekChartPercent,
     GfkASP,
     YugASP,
   },
@@ -117,6 +135,10 @@ export default {
   display: flex;
   justify-content: center;
   // display: none;
+}
+
+.percent {
+  margin-top: 30px;
 }
 
 hr {

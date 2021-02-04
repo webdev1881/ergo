@@ -91,7 +91,7 @@ export default {
     let fetchBrands = await this.$store.dispatch("fetchBrands", [this.urlGfk, this.weeks])
     this.brandsValueGfk = fetchBrands[0]
     this.lastWeek = fetchBrands[1]
-    console.log(this.lastWeek);
+    // console.log(this.lastWeek);
 
     this.render();
     this.isLoading = false;

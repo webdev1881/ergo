@@ -120,7 +120,7 @@ export default new Vuex.Store({
         return brandsValue[b].weeks[lastWeek].ASP - brandsValue[a].weeks[lastWeek].ASP
       }).map( item => {sortedBrandsValue.push( brandsValue[item] )})    
 
-      console.log( [sortedBrandsValue, lastWeek] )
+      // console.log( [sortedBrandsValue, lastWeek] )
       return [sortedBrandsValue, lastWeek]
     },
 
