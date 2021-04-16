@@ -14,7 +14,12 @@ const routes = [
     path: '/clasters',
     name: 'clasters',
     component: () => import('../views/Clasters.vue')
-  }
+  },
+  {
+    path: '/asp',
+    name: 'asp',
+    component: () => import('../views/Asp.vue')
+  },
 ]
 
 const router = new VueRouter({

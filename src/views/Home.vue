@@ -30,31 +30,6 @@
       
     </div>
 
-
-
-
-    <ul ref="collapsible" class="collapsible">
-      <li>
-        <div class="collapsible-header"><i class="material-icons">filter_drama</i>ASP</div>
-        <div class="collapsible-body">
-
-          <div class="asps">
-            <div class="title">ASP</div>
-            <div class="charts">
-              <div class="asp">
-                <GfkASP @changeLoading="loadedUnits" />
-              </div>
-              <div class="asp">
-                <YugASP @changeLoading="loadedUnits" />
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </li>
-    </ul>
-
-
     
 
     <hr />
@@ -67,8 +42,7 @@ import WeekChartUAH from "@/components/Home/WeekChartUAH";
 
 import WeekChartPercent from "@/components/Home/WeekChartPercent";
 
-import GfkASP from "@/components/Home/GfkASP";
-import YugASP from "@/components/Home/YugASP";
+
 
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
@@ -111,8 +85,6 @@ export default {
     WeekChartUnits,
     WeekChartUAH,
     WeekChartPercent,
-    GfkASP,
-    YugASP,
   },
 };
 </script>
