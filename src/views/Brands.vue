@@ -3,39 +3,41 @@
 
  <div class="clusters_brands" >
 
-  <!-- <div v-if="!iisLoadedClastersGfk" class="load">
+  <div v-if="!isloadedBrandGfk" class="load">
    <Loader />
-  </div> -->
+  </div>
 
-  <!-- <div v-show="iisLoadedClastersGfk && isLoadedClastersYug" class="wrapper"> -->
 
-    <div class="clasters">
-        <div class="title">Clusters</div>
+
+    <div class="brands" v-show="isloadedBrandGfk">
+        <div class="title">Brands</div>
+        
+        <div class="select" > 
+            <select class="wrap" ref="select" v-model="brand" >
+            <option v-for="b in brands" :key="b" :value="b">{{ b }}</option>
+            </select>
+            <label>Materialize Select</label>
+        </div>
+
         <div class="charts">
-            <WeekGfkClusters @changeLoadingGfk="loadedClastersGfk" />
-            <WeekYugClusters @changeLoadingYug="loadedClastersYug" />
+            <BrandGfkClusters :brand="brand" @changeLoadingBrand="loadedBrandGfk" />
+            <BrandYugClusters :brand="brand" @changeLoadingBrand="loadedBrandYug" />
         </div>
         <div class="arrows">
-            <button class="waves-effect waves-light btn-small" @click="addWeeksClaster">
+            <button class="waves-effect waves-light btn-small" @click="addWeeksClasterBrand">
             <i class="material-icons dp48">keyboard_arrow_left</i>
             </button>
-            <button class="waves-effect waves-light btn-small" @click="removeWeeksClaster">
+            <button class="waves-effect waves-light btn-small" @click="removeWeeksClasterBrand">
             <i class="material-icons dp48">keyboard_arrow_right</i>
             </button>
         </div>
     </div>
-
-
-
-  <!-- </div> -->
   
   
  </div>
 </template>
 
 <script>
-import WeekGfkClusters from "@/components/Clasters/WeekGfkClusters";
-import WeekYugClusters from "@/components/Clasters/WeekYugClusters";
 
 import BrandGfkClusters from "@/components/Clasters/BrandGfkClusters";
 import BrandYugClusters from "@/components/Clasters/BrandYugClusters";
@@ -45,10 +47,8 @@ import brands from "../data/brands";
 export default {
  name: "clasters",
  data: () => ({
-  isLoadedClastersGfk: false,
-  isLoadedClastersYug: false,
-  isloadedBrandGfk: false,
-  isloadedBrandYug: false,
+  isloadedBrandGfk: true,
+  isloadedBrandYug: true,
   brands: [],
   brand: "ERGO",
  }),
@@ -79,28 +79,17 @@ export default {
    this.isloadedBrandYug = true;
   },
 
-  addWeeksClaster() {
-   this.$children[0].add();
-   this.$children[1].add();
-  },
-  removeWeeksClaster() {
-   this.$children[0].remove();
-   this.$children[1].remove();
-  },
-
   addWeeksClasterBrand() {
-   this.$children[2].add();
-   this.$children[3].add()
+   this.$children[0].add();
+   this.$children[1].add()
   },
   removeWeeksClasterBrand() {
-   this.$children[2].remove();
-   this.$children[3].remove()
+   this.$children[0].remove();
+   this.$children[1].remove()
   },
  },
 
  components: {
-  WeekGfkClusters,
-  WeekYugClusters,
   BrandGfkClusters,
   BrandYugClusters
  },
@@ -152,7 +141,7 @@ hr {
 
 .brands {
  width: 100%;
- padding-top: 50px;
+//  padding-top: 50px;
 }
 
 .brand {

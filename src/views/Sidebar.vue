@@ -36,6 +36,7 @@ export default {
       { title: "Главная", icon: "cloud", url: "/", exact: true },
       { title: "Кластеры", icon: "cloud", url: "/clasters" },
       { title: "ASP", icon: "cloud", url: "/asp" },
+      { title: "Brands", icon: "cloud", url: "/brands" },
       { title: "TeST", icon: "cloud", url: "/test" },
     ],
     isActive: false

@@ -89,9 +89,13 @@ export default {
 
   async mounted() {
     let fetchBrands = await this.$store.dispatch("fetchBrands", [this.urlGfk, this.weeks])
+
+    console.log(fetchBrands);    
+
+    // debugger
     this.brandsValueGfk = fetchBrands[0]
     this.lastWeek = fetchBrands[1]
-    // console.log(this.lastWeek);
+
 
     this.render();
     this.isLoading = false;

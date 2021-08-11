@@ -99,7 +99,7 @@ export default {
     this.render()
     this.isLoading = false
     this.onInput()
-    console.log( this.$data._chart.data.datasets )
+    // console.log( this.$data._chart.data.datasets )
   },
 
   methods: {

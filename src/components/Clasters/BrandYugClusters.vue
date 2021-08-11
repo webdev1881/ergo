@@ -212,7 +212,7 @@ export default {
  },
  beforeDestroy () {
    this.$data._chart.destroy()
-   console.log( 'Chart destroyed BrandGfkClusters' );
+   console.log( 'Chart destroyed BrandYugClusters' );
  },
 };
 </script>

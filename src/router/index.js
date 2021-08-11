@@ -20,6 +20,11 @@ const routes = [
     name: 'asp',
     component: () => import('../views/Asp.vue')
   },
+  {
+    path: '/brands',
+    name: 'brands',
+    component: () => import('../views/Brands.vue')
+  },
 ]
 
 const router = new VueRouter({
