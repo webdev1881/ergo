@@ -24,7 +24,7 @@
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.2",
     "@vue/cli-plugin-babel": "^4.0.0",
-    "@vue/cli-service": "^4.0.0",
+    "@vue/cli-service": "^5.0.8",
     "ember-cli-materialize": "^0.22.0",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
